@@ -19,19 +19,20 @@
 
 <body>
 <header>
-    <nav>
+    <nav x-data="{ tab: window.location.pathname.substring(1) || 'home' }"
+         x-on:tab-change.window="tab = $event.detail.value">
         <div id="nav-home">
             <a hx-get="/home" hx-push-url="true" hx-target="#main">Home</a> |
             <a hx-get="/tasks" hx-push-url="true" hx-target="#main">Tasks</a>
         </div>
         <div id="nav-search">
-            <input
-                    type="search"
-                    name="search"
-                    placeholder="begin typing to search..."
-                    hx-get="/items"
-                    hx-trigger="input changed delay:500ms, search"
-                    hx-target="#tasks">
+            <input x-show="tab === 'tasks'"
+                   type="search"
+                   name="search"
+                   placeholder="begin typing to search..."
+                   hx-get="/items"
+                   hx-trigger="input changed delay:500ms, search"
+                   hx-target="#tasks">
         </div>
         <div id="nav-user">
             Hi User
