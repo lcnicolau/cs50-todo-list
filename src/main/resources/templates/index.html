@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script defer src="/webjars/htmx.org/2.0.3/dist/htmx.min.js"></script>
+    <script defer src="/webjars/alpinejs/3.14.3/dist/cdn.min.js"></script>
+
+    <link rel="stylesheet" href="/webjars/font-awesome/6.6.0/css/all.css">
+    <link rel="stylesheet" href="/css/no-class.css">
+    <link rel="stylesheet" href="/css/custom.css">
+
+    <title>To Do List</title>
+</head>
+
+<body>
+<header>
+    <nav>
+        <div id="nav-home">
+            <a hx-get="/home" hx-push-url="true" hx-target="#main">Home</a> |
+            <a hx-get="/tasks" hx-push-url="true" hx-target="#main">Tasks</a>
+        </div>
+        <div id="nav-search">
+            <input
+                    type="search"
+                    name="search"
+                    placeholder="begin typing to search..."
+                    hx-get="/items"
+                    hx-trigger="input changed delay:500ms, search"
+                    hx-target="#tasks">
+        </div>
+        <div id="nav-user">
+            Hi User
+        </div>
+    </nav>
+</header>
+
+<hr class="body-divider">
+
+<main id="main">
+    <p>Page content goes here</p>
+</main>
+
+<hr class="body-divider">
+
+<footer>
+    <span>This is <a href="https://cs50.harvard.edu/x/" target="_blank">CS50</a> Final Project</span>
+</footer>
+</body>
+
+</html>

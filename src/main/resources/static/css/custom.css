@@ -1,0 +1,61 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header,
+footer {
+    display: flex;
+    justify-content: center;
+    padding: 1em;
+}
+
+nav {
+    flex-grow: 1;
+    max-width: 1000px;
+    height: 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+}
+
+nav #nav-search {
+    flex-grow: 1;
+    max-width: 400px;
+}
+
+main {
+    flex-grow: 1;
+    max-width: 800px;
+    width: 90vw;
+    padding: 1em;
+}
+
+hr.body-divider {
+    margin: 0;
+}
+
+h1 {
+    color: orangered;
+}
+
+input,
+textarea {
+    margin-bottom: initial;
+}
+
+input[type=checkbox],
+input[type=radio] {
+    width: initial;
+}
+
+aside {
+    margin: 2em 0;
+}
+
+form label,
+form button {
+    margin: 1em 0;
+}
