@@ -1,0 +1,20 @@
+<div class="item" th:classappend="${item.done ? 'done' : 'todo'}">
+    <input class="description"
+           name="description"
+           placeholder="just type and hit enter..."
+           th:value="${item.description}"
+           autofocus
+           hx-trigger="keyup[key=='Enter' && this.value.trim() !== '']"
+           hx:put="@{/items/{id}(id=${item.id})}"
+           hx:vals="${ {done: item.done } }"
+           hx-target="closest .item"
+           hx-swap="outerHTML"/>
+
+    <button title="Cancel"
+            hx-trigger="click, blur from:.description, keyup[key=='Escape'] from:body"
+            hx:get="@{/items/{id}(id=${item.id})}"
+            hx-target="closest .item"
+            hx-swap="outerHTML">
+        <i class="fa-solid fa-xmark"></i>
+    </button>
+</div>

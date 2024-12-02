@@ -6,6 +6,19 @@
     <th:block th:fragment="content">
         <h1>to do...</h1>
         <aside id="error"></aside>
+
+        <input autofocus
+               name="description"
+               placeholder="add your tasks here..."
+               hx-post="/items"
+               hx-trigger="keyup[key=='Enter' && this.value.trim() !== '']"
+               hx-target="#tasks"
+               hx-swap="afterbegin"
+               hx-on::after-request="this.value=''"/>
+
+        <hr class="section-divider">
+
+        <div id="tasks" hx-get="/items" hx-trigger="load"></div>
     </th:block>
 
 </main>

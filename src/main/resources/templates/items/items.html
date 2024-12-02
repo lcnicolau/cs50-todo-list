@@ -1,0 +1,13 @@
+<th:block
+        th:each="item : ${items.content}"
+        th:insert="~{items/item}">
+</th:block>
+
+<div th:if="${items.hasNext}"
+     class="loader"
+     hx:get="@{/items(page=${items.number + 1}, size=${items.size}, search=${search})}"
+     hx-trigger="revealed"
+     hx-target="this"
+     hx-swap="outerHTML">
+    <img class="htmx-indicator" src="/images/loading.svg" alt="loading..." width="50">
+</div>
