@@ -2,11 +2,14 @@ package io.github.lcnicolau.cs50.todolist.tasks;
 
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
+
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Controller
 @RequestMapping("/items")
@@ -21,7 +24,7 @@ class TaskController {
 
     @GetMapping
     ModelAndView list(@RequestParam(defaultValue = "") String search,
-                      Pageable pageable) {
+                      @SortDefault(sort = "created", direction = DESC) Pageable pageable) {
         var found = taskService.findForCurrentUser(search, pageable);
         return new ModelAndView("items/items", Map.of("search", search, "items", found));
     }

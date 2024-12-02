@@ -27,8 +27,8 @@ class TaskService {
         var currentUser = auditorAware.getCurrentAuditor()
                 .orElseThrow(() -> new ResponseStatusException(UNAUTHORIZED, "You must be authenticated"));
         return (search.isBlank())
-                ? taskRepository.findByAuthorOrderByCreatedDesc(currentUser, pageable)
-                : taskRepository.findByAuthorAndDescriptionContainingIgnoreCaseOrderByCreatedDesc(currentUser, search, pageable);
+                ? taskRepository.findByAuthor(currentUser, pageable)
+                : taskRepository.findByAuthorAndDescriptionContainingIgnoreCase(currentUser, search, pageable);
     }
 
     Task findByIdForCurrentUser(Integer id) {

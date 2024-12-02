@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 interface TaskRepository extends JpaRepository<Task, Integer> {
 
-    Page<Task> findByAuthorOrderByCreatedDesc(Planner author, Pageable pageable);
+    Page<Task> findByAuthor(Planner author, Pageable pageable);
 
-    Page<Task> findByAuthorAndDescriptionContainingIgnoreCaseOrderByCreatedDesc(Planner author, String description, Pageable pageable);
+    Page<Task> findByAuthorAndDescriptionContainingIgnoreCase(Planner author, String description, Pageable pageable);
 
 }
