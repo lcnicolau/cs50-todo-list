@@ -1,5 +1,6 @@
 package io.github.lcnicolau.cs50.todolist.planner;
 
+import io.github.lcnicolau.cs50.todolist.config.validation.Password;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,8 +19,8 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Planner {
 
-    public static final Planner USER = new Planner("User", "user@todolist.com", "");
-    public static final Planner ADMIN = new Planner("Admin", "admin@todolist.com", "");
+    public static final Planner USER = new Planner("User", "user@todolist.com", "$2a$10$ZQmwDHSz06NG64yxpVrUFu7RnYQHTGvKbfjD8UDLJQYFsim/Zm12q");
+    public static final Planner ADMIN = new Planner("Admin", "admin@todolist.com", "$2a$10$LMrCFJFLNC4PjH7.734zy.FOUjGrtXiu4P0nQld1HROf9LGvrPPTa");
 
     @Id
     @GeneratedValue
@@ -29,7 +30,7 @@ public class Planner {
     @Email
     @Column(unique = true)
     private String email;
-    // TODO: Validate password
+    @Password
     private String password;
 
     Planner(String name, String email, String password) {

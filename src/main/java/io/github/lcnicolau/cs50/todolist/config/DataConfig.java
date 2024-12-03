@@ -6,16 +6,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-import java.util.Optional;
-
 @Configuration
 @EnableJpaAuditing
 class DataConfig {
 
+    private final SecurityConfig securityConfig;
+
+    DataConfig(SecurityConfig securityConfig) {
+        this.securityConfig = securityConfig;
+    }
+
+
     @Bean
     AuditorAware<Planner> auditorAware() {
-        // TODO: Get the current user
-        return () -> Optional.of(Planner.USER);
+        return securityConfig::getCurrentUser;
     }
 
 }

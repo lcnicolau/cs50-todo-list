@@ -19,7 +19,9 @@ class PlannerInitializer {
     @PostConstruct
     void init() {
         USER.setId(plannerRepository.save(USER).getId());
+        USER.setPassword(null);
         ADMIN.setId(plannerRepository.save(ADMIN).getId());
+        ADMIN.setPassword(null);
     }
 
 }
