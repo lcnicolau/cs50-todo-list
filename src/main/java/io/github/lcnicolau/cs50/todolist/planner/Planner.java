@@ -18,6 +18,9 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Planner {
 
+    public static final Planner USER = new Planner("User", "user@todolist.com", "");
+    public static final Planner ADMIN = new Planner("Admin", "admin@todolist.com", "");
+
     @Id
     @GeneratedValue
     private Integer id;

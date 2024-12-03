@@ -15,9 +15,7 @@ class DataConfig {
     @Bean
     AuditorAware<Planner> auditorAware() {
         // TODO: Get the current user
-        Planner currentUser = new Planner();
-        currentUser.setId(1);
-        return () -> Optional.of(currentUser);
+        return () -> Optional.of(Planner.USER);
     }
 
 }

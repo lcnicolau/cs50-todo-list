@@ -3,13 +3,11 @@ package io.github.lcnicolau.cs50.todolist.planner;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import static io.github.lcnicolau.cs50.todolist.planner.Planner.ADMIN;
+import static io.github.lcnicolau.cs50.todolist.planner.Planner.USER;
 
 @Component
 class PlannerInitializer {
-
-    static final Planner USER = new Planner("User", "user@todolist.com", "");
-    static final Planner ADMIN = new Planner("Admin", "admin@todolist.com", "");
 
     private final PlannerRepository plannerRepository;
 
@@ -20,7 +18,8 @@ class PlannerInitializer {
 
     @PostConstruct
     void init() {
-        plannerRepository.saveAll(List.of(USER, ADMIN));
+        USER.setId(plannerRepository.save(USER).getId());
+        ADMIN.setId(plannerRepository.save(ADMIN).getId());
     }
 
 }
