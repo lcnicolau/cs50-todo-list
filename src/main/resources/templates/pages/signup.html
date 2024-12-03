@@ -1,0 +1,38 @@
+<main xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}"
+      layout:fragment="main">
+
+    <th:block th:fragment="content">
+        <h1>sign up</h1>
+        <aside id="error"></aside>
+
+        <form hx-post="/signup">
+            <label>
+                Name <input type="text" name="name" placeholder="Name" required autofocus>
+            </label>
+            <label>
+                Email <input type="email" name="email" placeholder="Email" required>
+            </label>
+            <label>
+                Password <input type="password" name="password" placeholder="Password" required>
+            </label>
+            <label>
+                Confirm <input type="password" placeholder="Confirm" required
+                               onkeydown="this.setCustomValidity('') // reset validation"
+                               hx-on::validation:validate="validateConfirmPassword(event)">
+            </label>
+            <button type="submit">Sign up</button>
+        </form>
+
+        <script>
+          function validateConfirmPassword(event) {
+            const confirm = event.target;
+            const password = htmx.find('input[name=password]');
+            confirm.setCustomValidity((confirm.value === password.value) ? '' : 'Passwords do not match.');
+            htmx.closest(confirm, 'form').reportValidity();
+          }
+        </script>
+    </th:block>
+
+</main>

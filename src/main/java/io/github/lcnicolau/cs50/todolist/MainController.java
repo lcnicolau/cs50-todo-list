@@ -20,4 +20,16 @@ class MainController {
         return request.isHtmxRequest() ? "pages/tasks :: content" : "pages/tasks";
     }
 
+    @GetMapping("/signup")
+    @HxTriggerAfterSettle("{\"tab-change\": \"signup\"}")
+    String signUp(HtmxRequest request) {
+        return request.isHtmxRequest() ? "pages/signup :: content" : "pages/signup";
+    }
+
+    @GetMapping("/login")
+    @HxTriggerAfterSettle("{\"tab-change\": \"login\"}")
+    String login(HtmxRequest request) {
+        return request.isHtmxRequest() ? "pages/login :: content" : "pages/login";
+    }
+
 }

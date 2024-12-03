@@ -1,0 +1,29 @@
+<main xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}"
+      layout:fragment="main">
+
+    <th:block th:fragment="content">
+        <h1>log in</h1>
+        <aside id="error"></aside>
+
+        <form hx-post="/login" hx-on::after-request="resetForm(event)">
+            <label>
+                Email <input type="email" name="email" th:value="${email}" placeholder="Email" required autofocus>
+            </label>
+            <label>
+                Password <input type="password" name="password" placeholder="Password" required>
+            </label>
+            <button type="submit">Log in</button>
+        </form>
+
+        <script>
+          function resetForm(event) {
+            const password = htmx.find(event.target, 'input[name=password]');
+            password.value = '';
+            password.focus();
+          }
+        </script>
+    </th:block>
+
+</main>

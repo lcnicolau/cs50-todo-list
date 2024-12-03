@@ -1,5 +1,6 @@
 package io.github.lcnicolau.cs50.todolist.config;
 
+import io.github.lcnicolau.cs50.todolist.config.security.*;
 import io.github.lcnicolau.cs50.todolist.planner.Planner;
 import io.github.lcnicolau.cs50.todolist.planner.PlannerUserDetails;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.RequestHeaderRequestMatcher;
 
 import java.util.Optional;
 
@@ -34,11 +36,27 @@ class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .httpBasic(Customizer.withDefaults())
-                .authorizeHttpRequests(config -> config
+                .formLogin(login -> login
+                        .usernameParameter("email")
+                        .loginPage("/login")
+                        .failureForwardUrl("/error?login")
+                        .successHandler(new HxRedirectHeaderAuthenticationSuccessHandler("/home?login"))
+                ).logout(logout -> logout
+                        .logoutSuccessHandler(new HxRedirectHeaderLogoutSuccessHandler("/home?logout"))
+                ).exceptionHandling(handler -> handler
+                        .defaultAuthenticationEntryPointFor(
+                                new HxRedirectHeaderAuthenticationEntryPoint("/login?unauthorized"),
+                                new RequestHeaderRequestMatcher("HX-Request"))
+                        .defaultAccessDeniedHandlerFor(
+                                new HxRedirectHeaderAccessDeniedHandler("/error?forbidden"),
+                                new RequestHeaderRequestMatcher("HX-Request"))
+                ).authorizeHttpRequests(config -> config
                         .requestMatchers(
                                 "/",
-                                "/home"
+                                "/home",
+                                "/signup",
+                                "/login",
+                                "/error"
                         ).permitAll()
                         .requestMatchers(
                                 toStaticResources().atCommonLocations().excluding(JAVA_SCRIPT)
