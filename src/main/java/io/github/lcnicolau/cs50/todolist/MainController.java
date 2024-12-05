@@ -11,25 +11,25 @@ class MainController {
     @GetMapping({"/", "/home"})
     @HxTriggerAfterSettle("{\"tab-change\": \"home\"}")
     String home(HtmxRequest request) {
-        return request.isHtmxRequest() ? "pages/home :: content" : "pages/home";
+        return request.isHtmxRequest() && !request.isBoosted() ? "pages/home :: content" : "pages/home";
     }
 
     @GetMapping("/tasks")
     @HxTriggerAfterSettle("{\"tab-change\": \"tasks\"}")
     String tasks(HtmxRequest request) {
-        return request.isHtmxRequest() ? "pages/tasks :: content" : "pages/tasks";
+        return request.isHtmxRequest() && !request.isBoosted() ? "pages/tasks :: content" : "pages/tasks";
     }
 
     @GetMapping("/signup")
     @HxTriggerAfterSettle("{\"tab-change\": \"signup\"}")
     String signUp(HtmxRequest request) {
-        return request.isHtmxRequest() ? "pages/signup :: content" : "pages/signup";
+        return request.isHtmxRequest() && !request.isBoosted() ? "pages/signup :: content" : "pages/signup";
     }
 
     @GetMapping("/login")
     @HxTriggerAfterSettle("{\"tab-change\": \"login\"}")
     String login(HtmxRequest request) {
-        return request.isHtmxRequest() ? "pages/login :: content" : "pages/login";
+        return request.isHtmxRequest() && !request.isBoosted() ? "pages/login :: content" : "pages/login";
     }
 
 }
