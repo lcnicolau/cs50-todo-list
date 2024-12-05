@@ -16,7 +16,7 @@ public class HxRedirectHeaderLogoutSuccessHandler implements LogoutSuccessHandle
     public HxRedirectHeaderLogoutSuccessHandler(String logoutSuccessUrl) {
         var handler = new SimpleUrlLogoutSuccessHandler();
         handler.setDefaultTargetUrl(logoutSuccessUrl);
-        handler.setRedirectStrategy(new HxSuccessRedirectStrategy());
+        handler.setRedirectStrategy(new HxLocationRedirectStrategy());
         this.delegate = handler;
     }
 

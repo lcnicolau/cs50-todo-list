@@ -21,7 +21,7 @@ public class HxRedirectHeaderAuthenticationSuccessHandler implements Authenticat
         var handler = new SavedRequestAwareAuthenticationSuccessHandler();
         handler.setDefaultTargetUrl(defaultSuccessUrl);
         handler.setAlwaysUseDefaultTargetUrl(alwaysUse);
-        handler.setRedirectStrategy(new HxSuccessRedirectStrategy());
+        handler.setRedirectStrategy(new HxLocationRedirectStrategy());
         this.delegate = handler;
     }
 
