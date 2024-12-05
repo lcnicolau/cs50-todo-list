@@ -4,12 +4,23 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head>
+<head hx-head="merge">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta name="csrf-token" th:content="${_csrf.token}"/>
+    <meta name="csrf-header" th:content="${_csrf.headerName}"/>
+
     <script defer src="/webjars/htmx.org/2.0.3/dist/htmx.min.js"></script>
+    <script defer src="/webjars/htmx-ext-head-support/2.0.2/head-support.js"></script>
     <script defer src="/webjars/alpinejs/3.14.3/dist/cdn.min.js"></script>
+    <script>
+      document.addEventListener('htmx:configRequest', (event) => {
+        const header = htmx.find('meta[name=csrf-header]')?.content;
+        const token = htmx.find('meta[name=csrf-token]')?.content;
+        if (header && token) event.detail.headers[header] = token;
+      });
+    </script>
 
     <link rel="stylesheet" href="/webjars/font-awesome/6.6.0/css/all.css">
     <link rel="stylesheet" href="/css/no-class.css">
@@ -18,7 +29,7 @@
     <title>To Do List</title>
 </head>
 
-<body>
+<body hx-ext="head-support">
 <header>
     <nav x-data="{ tab: window.location.pathname.substring(1) || 'home' }"
          x-on:tab-change.window="tab = $event.detail.value">
