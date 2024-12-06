@@ -3,9 +3,9 @@
         th:insert="~{items/item}">
 </th:block>
 
-<div th:if="${items.hasNext}"
-     class="loader"
-     hx:get="@{/items(page=${items.number + 1}, size=${items.size}, search=${search})}"
+<div class="loader"
+     th:if="${items.hasNext}"
+     th:hx-get="@{/items (page=${items.number + 1}, search=${search})}"
      hx-trigger="revealed"
      hx-target="this"
      hx-swap="outerHTML">
