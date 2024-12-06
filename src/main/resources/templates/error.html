@@ -1,0 +1,13 @@
+<main xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}"
+      layout:fragment="main">
+
+    <th:block th:fragment="content">
+        <h1>error</h1>
+        <aside id="error" hx-swap-oob="innerHTML">
+            <span th:text="${message}"></span>
+        </aside>
+    </th:block>
+
+</main>

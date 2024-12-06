@@ -101,6 +101,11 @@ form button {
 }
 
 
+#error span {
+    white-space: pre-line;
+}
+
+
 i.fa-trash-can {
     color: red;
 }

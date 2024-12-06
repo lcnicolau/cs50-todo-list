@@ -1,5 +1,6 @@
 package io.github.lcnicolau.cs50.todolist.planner;
 
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,6 +20,9 @@ class PlannerService implements UserDetailsService {
 
 
     Planner signup(Planner planner) {
+        if (plannerRepository.findByEmail(planner.getEmail()).isPresent()) {
+            throw new DuplicateKeyException("An account already exists for this email address");
+        }
         planner.setPassword(passwordEncoder.encode(planner.getPassword()));
         return plannerRepository.save(planner);
     }

@@ -3,3 +3,7 @@ spring:
     name: cs50-todo-list
   datasource:
     url: jdbc:h2:mem:todo-list
+
+server:
+  error:
+    include-message: always
