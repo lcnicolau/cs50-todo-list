@@ -2,8 +2,8 @@
     <input type="checkbox"
            name="done"
            th:checked="${item.done}"
-           th:hx-put="@{/items/{id} (id=${item.id})}"
-           hx:vals="${ {description: item.description} }"
+           th:hx-patch="@{/items/{id} (id=${item.id})}"
+           hx:vals="${ {done: !item.done} }"
            hx-target="closest .item"
            hx-swap="outerHTML">
 

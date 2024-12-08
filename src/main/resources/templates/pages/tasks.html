@@ -11,6 +11,7 @@
                name="description"
                placeholder="add your tasks here..."
                hx-post="/items"
+               hx-vals='{"done": false}'
                hx-trigger="keyup[key=='Enter' && this.value.trim() !== '']"
                hx-target="#tasks"
                hx-swap="afterbegin"

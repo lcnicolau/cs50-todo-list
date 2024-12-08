@@ -38,15 +38,15 @@ class TaskController {
     }
 
     @PostMapping
-    ModelAndView save(@Valid Task task) {
-        var saved = taskService.saveForCurrentUser(task);
-        return new ModelAndView("items/item", "item", saved);
+    ModelAndView create(@Valid Task task) {
+        var created = taskService.createForCurrentUser(task);
+        return new ModelAndView("items/item", "item", created);
     }
 
-    @PutMapping(value = "/{id}")
-    ModelAndView edit(@PathVariable Integer id,
-                      @Valid Task task) {
-        var updated = taskService.updateForCurrentUser(id, task);
+    @PatchMapping(value = "/{id}")
+    ModelAndView update(@PathVariable Integer id,
+                        @RequestParam Map<String, String> patch) {
+        var updated = taskService.updateForCurrentUser(id, patch);
         return new ModelAndView("items/item", "item", updated);
     }
 

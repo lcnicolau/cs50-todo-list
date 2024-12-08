@@ -3,6 +3,7 @@ package io.github.lcnicolau.cs50.todolist.tasks;
 import io.github.lcnicolau.cs50.todolist.planner.Planner;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,9 +26,13 @@ class Task {
     @GeneratedValue
     private Integer id;
     @NotBlank
+    @Column(nullable = false)
     private String description;
-    private Boolean done = false;
+    @NotNull
+    @Column(nullable = false)
+    private Boolean done;
     @CreatedDate
+    @Column(nullable = false)
     private Instant created;
     @CreatedBy
     @ManyToOne(optional = false)
@@ -35,6 +40,7 @@ class Task {
 
     Task(String description) {
         this.description = description;
+        this.done = false;
     }
 
 }
