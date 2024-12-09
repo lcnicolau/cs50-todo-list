@@ -1,0 +1,13 @@
+<main xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}"
+      layout:fragment="main">
+
+    <th:block th:fragment="content">
+        <h1>users</h1>
+        <aside id="error"></aside>
+
+        <div id="users" hx-get="/users?search" hx-trigger="load"></div>
+    </th:block>
+
+</main>

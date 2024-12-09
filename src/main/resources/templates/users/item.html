@@ -1,0 +1,30 @@
+<div class="item" th:classappend="${item.enabled ? 'enabled' : 'disabled'}">
+    <input type="checkbox"
+           name="enabled"
+           th:checked="${item.enabled}"
+           th:hx-patch="@{/users/{id} (id=${item.id})}"
+           hx:vals="${ {enabled: !item.enabled} }"
+           hx-target="closest .item"
+           hx-swap="outerHTML">
+
+    <span class="name"
+          th:text="${item.name}">
+    </span>
+    -
+    <span class="description"
+          th:text="${item.email}">
+    </span>
+
+    <span class="date"
+          th:text="${@viewUtils.getElapsedTimeSince(item.created)}">
+    </span>
+
+    <button title="Delete"
+            th:hx-delete="@{/users/{id} (id=${item.id})}"
+            hx-trigger="click"
+            hx-confirm="Are you sure to delete this?"
+            hx-target="closest .item"
+            hx-swap="outerHTML swap:1s">
+        <i class="fa-regular fa-trash-can"></i>
+    </button>
+</div>

@@ -37,6 +37,9 @@
         <div id="nav-home">
             <a hx-get="/home" hx-push-url="true" hx-target="main">Home</a> |
             <a hx-get="/tasks" hx-push-url="true" hx-target="main">Tasks</a>
+            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                | <a hx-get="/users" hx-push-url="true" hx-target="main">Users</a>
+            </th:block>
         </div>
         <div id="nav-search" sec:authorize="isAuthenticated()">
             <input x-show="tab === 'tasks'"
