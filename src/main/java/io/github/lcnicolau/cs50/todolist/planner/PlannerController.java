@@ -1,7 +1,6 @@
 package io.github.lcnicolau.cs50.todolist.planner;
 
-import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxPushUrl;
-import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRetarget;
+import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,10 +17,10 @@ class PlannerController {
 
 
     @PostMapping("/signup")
-    @HxPushUrl("/login")
-    @HxRetarget("main")
-    ModelAndView signup(@Valid Planner planner) {
+    ModelAndView signup(@Valid Planner planner, HtmxResponse response) {
         var saved = plannerService.signup(planner);
+        response.setPushUrl("/login");
+        response.setRetarget("main");
         return new ModelAndView("pages/login :: content", "email", saved.getEmail());
     }
 
