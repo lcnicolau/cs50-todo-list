@@ -13,7 +13,13 @@ public class PlannerUserDetails extends User implements UserDetails {
     private final Planner planner;
 
     PlannerUserDetails(Planner planner) {
-        super(planner.getEmail(), planner.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));
+        super(planner.getEmail(),
+                planner.getPassword(),
+                planner.getEnabled(),
+                true,
+                true,
+                true,
+                List.of(new SimpleGrantedAuthority("ROLE_USER")));
         this.planner = planner;
     }
 
@@ -24,7 +30,7 @@ public class PlannerUserDetails extends User implements UserDetails {
     @Override
     public void eraseCredentials() {
         super.eraseCredentials();
-        this.planner.setPassword(null);
+        this.planner.eraseCredentials();
     }
 
 }

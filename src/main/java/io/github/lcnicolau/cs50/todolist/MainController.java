@@ -34,6 +34,12 @@ class MainController {
         return request.isHtmxRequest() && !request.isBoosted() ? "pages/tasks :: content" : "pages/tasks";
     }
 
+    @GetMapping("/users")
+    @HxTriggerAfterSettle("{\"tab-change\": \"users\"}")
+    String users(HtmxRequest request) {
+        return request.isHtmxRequest() && !request.isBoosted() ? "pages/users :: content" : "pages/users";
+    }
+
     @GetMapping("/signup")
     @HxTriggerAfterSettle("{\"tab-change\": \"signup\"}")
     String signup(HtmxRequest request) {
