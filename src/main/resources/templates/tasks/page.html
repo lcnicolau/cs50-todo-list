@@ -1,11 +1,11 @@
 <th:block
-        th:each="item : ${items.content}"
-        th:insert="~{items/item}">
+        th:each="item : ${page.content}"
+        th:insert="~{tasks/item}">
 </th:block>
 
 <div class="loader"
-     th:if="${items.hasNext}"
-     th:hx-get="@{/items (page=${items.number + 1}, search=${search})}"
+     th:if="${page.hasNext}"
+     th:hx-get="@{/tasks (search=${search}, page=${page.number + 1})}"
      hx-trigger="revealed"
      hx-target="this"
      hx-swap="outerHTML">

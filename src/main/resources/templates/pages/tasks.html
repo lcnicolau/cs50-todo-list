@@ -10,7 +10,7 @@
         <input autofocus
                name="description"
                placeholder="add your tasks here..."
-               hx-post="/items"
+               hx-post="/tasks"
                hx-vals='{"done": false}'
                hx-trigger="keyup[key=='Enter' && this.value.trim() !== '']"
                hx-target="#tasks"
@@ -19,7 +19,7 @@
 
         <hr class="section-divider">
 
-        <div id="tasks" hx-get="/items" hx-trigger="load"></div>
+        <div id="tasks" hx-get="/tasks?search" hx-trigger="load"></div>
     </th:block>
 
 </main>

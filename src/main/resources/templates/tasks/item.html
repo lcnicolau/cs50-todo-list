@@ -2,25 +2,25 @@
     <input type="checkbox"
            name="done"
            th:checked="${item.done}"
-           th:hx-patch="@{/items/{id} (id=${item.id})}"
+           th:hx-patch="@{/tasks/{id} (id=${item.id})}"
            hx:vals="${ {done: !item.done} }"
            hx-target="closest .item"
            hx-swap="outerHTML">
 
     <span class="description"
           th:text="${item.description}"
-          th:hx-get="@{/items/{id} (id=${item.id}, edit=true)}"
+          th:hx-get="@{/tasks/{id} (id=${item.id}, edit=true)}"
           hx-trigger="dblclick"
           hx-target="closest .item"
           hx-swap="outerHTML">
     </span>
 
     <span class="date"
-          th:text="${'- ' + @viewUtils.getElapsedTimeSince(item.created)}">
+          th:text="${@viewUtils.getElapsedTimeSince(item.created)}">
     </span>
 
     <button title="Delete"
-            th:hx-delete="@{/items/{id} (id=${item.id})}"
+            th:hx-delete="@{/tasks/{id} (id=${item.id})}"
             hx-trigger="click"
             hx-confirm="Are you sure to delete this?"
             hx-target="closest .item"

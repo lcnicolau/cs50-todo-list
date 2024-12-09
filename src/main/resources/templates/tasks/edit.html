@@ -4,13 +4,13 @@
            th:value="${item.description}"
            placeholder="just type and hit enter..."
            autofocus
-           th:hx-patch="@{/items/{id} (id=${item.id})}"
+           th:hx-patch="@{/tasks/{id} (id=${item.id})}"
            hx-trigger="keyup[key=='Enter' && this.value.trim() !== '']"
            hx-target="closest .item"
            hx-swap="outerHTML"/>
 
     <button title="Cancel"
-            th:hx-get="@{/items/{id} (id=${item.id})}"
+            th:hx-get="@{/tasks/{id} (id=${item.id})}"
             hx-trigger="click, blur from:.description, keyup[key=='Escape'] from:body"
             hx-target="closest .item"
             hx-swap="outerHTML">

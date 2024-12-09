@@ -12,7 +12,7 @@ import java.util.Map;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Controller
-@RequestMapping("/items")
+@RequestMapping("/tasks")
 class TaskController {
 
     private final TaskService taskService;
@@ -22,35 +22,34 @@ class TaskController {
     }
 
 
-    @GetMapping
-    ModelAndView list(@RequestParam(defaultValue = "") String search,
+    @GetMapping(params = "search")
+    ModelAndView list(@RequestParam String search,
                       @SortDefault(sort = "created", direction = DESC) Pageable pageable) {
-        var found = taskService.findForCurrentUser(search, pageable);
-        return new ModelAndView("items/items", Map.of("search", search, "items", found));
+        var page = taskService.findForCurrentUser(search, pageable);
+        return new ModelAndView("tasks/page", Map.of("search", search, "page", page));
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping("/{id}")
     ModelAndView find(@PathVariable Integer id,
                       @RequestParam(defaultValue = "false") Boolean edit) {
         var found = taskService.findByIdForCurrentUser(id);
-        var view = (edit) ? "items/edit" : "items/item";
-        return new ModelAndView(view, "item", found);
+        return new ModelAndView((edit) ? "tasks/edit" : "tasks/item", "item", found);
     }
 
     @PostMapping
     ModelAndView create(@Valid Task task) {
         var created = taskService.createForCurrentUser(task);
-        return new ModelAndView("items/item", "item", created);
+        return new ModelAndView("tasks/item", "item", created);
     }
 
-    @PatchMapping(value = "/{id}")
+    @PatchMapping("/{id}")
     ModelAndView update(@PathVariable Integer id,
                         @RequestParam Map<String, String> patch) {
         var updated = taskService.updateForCurrentUser(id, patch);
-        return new ModelAndView("items/item", "item", updated);
+        return new ModelAndView("tasks/item", "item", updated);
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping("/{id}")
     @ResponseBody
     void delete(@PathVariable Integer id) {
         taskService.deleteForCurrentUser(id);
