@@ -1,6 +1,7 @@
 package io.github.lcnicolau.cs50.todolist.tasks;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
@@ -13,13 +14,10 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Controller
 @RequestMapping("/tasks")
+@RequiredArgsConstructor
 class TaskController {
 
     private final TaskService taskService;
-
-    TaskController(TaskService taskService) {
-        this.taskService = taskService;
-    }
 
 
     @GetMapping(params = "search")

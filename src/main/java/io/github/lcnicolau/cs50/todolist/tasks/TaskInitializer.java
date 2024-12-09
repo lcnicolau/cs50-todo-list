@@ -2,18 +2,16 @@ package io.github.lcnicolau.cs50.todolist.tasks;
 
 import io.github.lcnicolau.cs50.todolist.planner.Planner;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Stream;
 
 @Component
+@RequiredArgsConstructor
 class TaskInitializer {
 
     private final TaskRepository taskRepository;
-
-    TaskInitializer(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
 
 
     @PostConstruct

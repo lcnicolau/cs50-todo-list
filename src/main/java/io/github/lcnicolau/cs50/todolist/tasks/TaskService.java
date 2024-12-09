@@ -1,6 +1,7 @@
 package io.github.lcnicolau.cs50.todolist.tasks;
 
 import io.github.lcnicolau.cs50.todolist.planner.Planner;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,17 +15,12 @@ import java.util.Objects;
 import static org.springframework.http.HttpStatus.*;
 
 @Service
+@RequiredArgsConstructor
 class TaskService {
 
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
     private final AuditorAware<Planner> auditorAware;
-
-    TaskService(TaskRepository taskRepository, TaskMapper taskMapper, AuditorAware<Planner> auditorAware) {
-        this.taskRepository = taskRepository;
-        this.taskMapper = taskMapper;
-        this.auditorAware = auditorAware;
-    }
 
 
     Page<Task> findForCurrentUser(String search, Pageable pageable) {
