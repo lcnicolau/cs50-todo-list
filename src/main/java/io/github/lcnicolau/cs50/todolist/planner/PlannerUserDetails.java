@@ -1,11 +1,8 @@
 package io.github.lcnicolau.cs50.todolist.planner;
 
 import lombok.Getter;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.List;
 
 @Getter
 public class PlannerUserDetails extends User implements UserDetails {
@@ -19,7 +16,7 @@ public class PlannerUserDetails extends User implements UserDetails {
                 true,
                 true,
                 true,
-                List.of(new SimpleGrantedAuthority("ROLE_USER")));
+                planner.authorities());
         this.planner = planner;
     }
 

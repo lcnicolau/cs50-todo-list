@@ -51,15 +51,16 @@ class SecurityConfig {
                                 new RequestHeaderRequestMatcher("HX-Request"))
                 ).authorizeHttpRequests(config -> config
                         .requestMatchers(
+                                toStaticResources().atCommonLocations().excluding(JAVA_SCRIPT)
+                        ).permitAll()
+                        .requestMatchers(
                                 "/",
                                 "/home",
                                 "/signup",
                                 "/login",
                                 "/error"
                         ).permitAll()
-                        .requestMatchers(
-                                toStaticResources().atCommonLocations().excluding(JAVA_SCRIPT)
-                        ).permitAll()
+                        .requestMatchers("/users/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .cors(Customizer.withDefaults())
