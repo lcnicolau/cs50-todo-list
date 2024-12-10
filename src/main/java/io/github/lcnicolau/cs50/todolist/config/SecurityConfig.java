@@ -78,6 +78,7 @@ class SecurityConfig {
                 .map(SecurityContext::getAuthentication)
                 .filter(Authentication::isAuthenticated)
                 .map(Authentication::getPrincipal)
+                .filter(PlannerUserDetails.class::isInstance)
                 .map(PlannerUserDetails.class::cast)
                 .map(PlannerUserDetails::getPlanner);
     }

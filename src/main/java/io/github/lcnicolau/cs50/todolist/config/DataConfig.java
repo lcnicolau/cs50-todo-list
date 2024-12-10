@@ -10,15 +10,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing
 class DataConfig {
 
-    private final SecurityConfig securityConfig;
-
-    DataConfig(SecurityConfig securityConfig) {
-        this.securityConfig = securityConfig;
-    }
-
-
     @Bean
-    AuditorAware<Planner> auditorAware() {
+    AuditorAware<Planner> auditorAware(SecurityConfig securityConfig) {
         return securityConfig::getCurrentUser;
     }
 
