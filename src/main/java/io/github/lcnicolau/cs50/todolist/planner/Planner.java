@@ -4,7 +4,6 @@ import io.github.lcnicolau.cs50.todolist.config.validation.Password;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,18 +28,22 @@ public class Planner implements CredentialsContainer {
     @Id
     @GeneratedValue
     private Integer id;
+
     @NotBlank
     @Column(nullable = false)
     private String name;
+
     @Email
     @Column(nullable = false, unique = true)
     private String email;
+
     @Password
     @Column(nullable = false)
     private String password;
-    @NotNull
+
     @Column(nullable = false)
-    private Boolean enabled;
+    private Boolean enabled = true;
+
     @CreatedDate
     @Column(nullable = false)
     private Instant created;
@@ -49,7 +52,6 @@ public class Planner implements CredentialsContainer {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.enabled = true;
     }
 
     @Override
