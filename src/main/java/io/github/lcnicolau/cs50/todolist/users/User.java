@@ -20,6 +20,7 @@ import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "users")
 @Getter
 @Setter
 @ToString

@@ -15,6 +15,7 @@ import java.time.Instant;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "tasks")
 @Getter
 @Setter
 @ToString

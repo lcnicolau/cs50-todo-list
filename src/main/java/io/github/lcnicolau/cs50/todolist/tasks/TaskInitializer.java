@@ -3,11 +3,13 @@ package io.github.lcnicolau.cs50.todolist.tasks;
 import io.github.lcnicolau.cs50.todolist.users.User;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Stream;
 
 @Component
+@DependsOn("userInitializer")
 @RequiredArgsConstructor
 class TaskInitializer {
 
