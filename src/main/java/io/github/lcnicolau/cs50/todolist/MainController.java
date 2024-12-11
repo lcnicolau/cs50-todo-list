@@ -1,7 +1,7 @@
 package io.github.lcnicolau.cs50.todolist;
 
-import io.github.lcnicolau.cs50.todolist.planner.Planner;
-import io.github.lcnicolau.cs50.todolist.planner.PlannerUserService;
+import io.github.lcnicolau.cs50.todolist.users.User;
+import io.github.lcnicolau.cs50.todolist.users.UserService;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxRequest;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxTriggerAfterSettle;
 import jakarta.servlet.ServletException;
@@ -19,7 +19,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 class MainController {
 
-    private final PlannerUserService plannerUserService;
+    private final UserService userService;
 
 
     @GetMapping({"/", "/home"})
@@ -47,8 +47,8 @@ class MainController {
     }
 
     @PostMapping("/signup")
-    void signup(@Valid Planner planner, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        plannerUserService.create(planner);
+    void signup(@Valid User user, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        userService.create(user);
         request.getRequestDispatcher("/login").forward(request, response);
     }
 

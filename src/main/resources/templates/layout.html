@@ -51,7 +51,7 @@
                    hx-target="#tasks">
         </div>
         <div id="nav-user" sec:authorize="isAuthenticated()">
-            Hi <span sec:authentication="principal.planner.name">User</span> |
+            Hi <span sec:authentication="principal.user.name">User</span> |
             <a hx-post="/logout">Log out</a>
         </div>
         <div id="nav-login" sec:authorize="isAnonymous()">

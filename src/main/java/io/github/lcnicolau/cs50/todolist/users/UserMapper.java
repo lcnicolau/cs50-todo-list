@@ -1,4 +1,4 @@
-package io.github.lcnicolau.cs50.todolist.planner;
+package io.github.lcnicolau.cs50.todolist.users;
 
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
@@ -11,14 +11,14 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE;
 
 @Mapper(componentModel = SPRING)
-interface PlannerMapper {
+interface UserMapper {
 
     @Mapping(target = "name")
     @Mapping(target = "enabled")
     @BeanMapping(ignoreByDefault = true, nullValuePropertyMappingStrategy = IGNORE)
-    Planner patch(Map<String, String> source, @MappingTarget Planner target);
+    User patch(Map<String, String> source, @MappingTarget User target);
 
     @Mapping(target = "password", ignore = true)
-    Planner eraseCredentials(Planner source);
+    User eraseCredentials(User source);
 
 }

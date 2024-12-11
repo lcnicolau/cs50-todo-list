@@ -1,4 +1,4 @@
-package io.github.lcnicolau.cs50.todolist.planner;
+package io.github.lcnicolau.cs50.todolist.users;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,35 +15,35 @@ import static org.springframework.data.domain.Sort.Direction.ASC;
 @Controller
 @RequestMapping("/users")
 @RequiredArgsConstructor
-class PlannerController {
+class UserController {
 
-    private final PlannerUserService plannerUserService;
+    private final UserService userService;
 
 
     @GetMapping(params = "search")
     ModelAndView list(@RequestParam String search,
                       @SortDefault(sort = "name", direction = ASC) Pageable pageable) {
-        var page = plannerUserService.find(search, pageable);
+        var page = userService.find(search, pageable);
         return new ModelAndView("users/page", Map.of("search", search, "page", page));
     }
 
     @PostMapping
-    ModelAndView create(@Valid Planner planner) {
-        var created = plannerUserService.create(planner);
+    ModelAndView create(@Valid User user) {
+        var created = userService.create(user);
         return new ModelAndView("users/item", "item", created);
     }
 
     @PatchMapping("/{id}")
     ModelAndView update(@PathVariable Integer id,
                         @RequestParam Map<String, String> patch) {
-        var updated = plannerUserService.update(id, patch);
+        var updated = userService.update(id, patch);
         return new ModelAndView("users/item", "item", updated);
     }
 
     @DeleteMapping("/{id}")
     @ResponseBody
     void delete(@PathVariable Integer id) {
-        plannerUserService.delete(id);
+        userService.delete(id);
     }
 
 }

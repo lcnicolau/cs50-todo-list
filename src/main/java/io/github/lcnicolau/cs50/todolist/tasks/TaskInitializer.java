@@ -1,6 +1,6 @@
 package io.github.lcnicolau.cs50.todolist.tasks;
 
-import io.github.lcnicolau.cs50.todolist.planner.Planner;
+import io.github.lcnicolau.cs50.todolist.users.User;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -121,7 +121,7 @@ class TaskInitializer {
                 "Assumenda cupiditate laboriosam sunt ullam vero! Possimus, velit!",
                 "Dignissimos dolorem facilis soluta veritatis! Corporis, quas, repellat.",
                 "Debitis distinctio facilis in ipsa laboriosam perferendis quam?"
-        ).map(Task::new).peek(task -> task.setAuthor(Planner.USER));
+        ).map(Task::new).peek(task -> task.setAuthor(User.BASIC));
     }
 
 }

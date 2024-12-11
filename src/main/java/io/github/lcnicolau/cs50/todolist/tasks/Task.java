@@ -1,6 +1,6 @@
 package io.github.lcnicolau.cs50.todolist.tasks;
 
-import io.github.lcnicolau.cs50.todolist.planner.Planner;
+import io.github.lcnicolau.cs50.todolist.users.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -38,7 +38,7 @@ class Task {
 
     @CreatedBy
     @ManyToOne(optional = false)
-    private Planner author;
+    private User author;
 
     Task(String description) {
         this.description = description;

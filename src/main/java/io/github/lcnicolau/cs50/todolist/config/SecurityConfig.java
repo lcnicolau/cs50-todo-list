@@ -1,8 +1,11 @@
 package io.github.lcnicolau.cs50.todolist.config;
 
-import io.github.lcnicolau.cs50.todolist.config.security.*;
-import io.github.lcnicolau.cs50.todolist.planner.Planner;
-import io.github.lcnicolau.cs50.todolist.planner.PlannerUserDetails;
+import io.github.lcnicolau.cs50.todolist.config.security.HxRedirectHeaderAccessDeniedHandler;
+import io.github.lcnicolau.cs50.todolist.config.security.HxRedirectHeaderAuthenticationEntryPoint;
+import io.github.lcnicolau.cs50.todolist.config.security.HxRedirectHeaderAuthenticationSuccessHandler;
+import io.github.lcnicolau.cs50.todolist.config.security.HxRedirectHeaderLogoutSuccessHandler;
+import io.github.lcnicolau.cs50.todolist.users.User;
+import io.github.lcnicolau.cs50.todolist.users.UserDetails;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -73,15 +76,15 @@ class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    Optional<Planner> getCurrentUser() {
+    Optional<User> getCurrentUser() {
         return Optional
                 .ofNullable(SecurityContextHolder.getContext())
                 .map(SecurityContext::getAuthentication)
                 .filter(Authentication::isAuthenticated)
                 .map(Authentication::getPrincipal)
-                .filter(PlannerUserDetails.class::isInstance)
-                .map(PlannerUserDetails.class::cast)
-                .map(PlannerUserDetails::getPlanner);
+                .filter(UserDetails.class::isInstance)
+                .map(UserDetails.class::cast)
+                .map(UserDetails::getUser);
     }
 
 }

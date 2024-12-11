@@ -1,4 +1,4 @@
-package io.github.lcnicolau.cs50.todolist.planner;
+package io.github.lcnicolau.cs50.todolist.users;
 
 import io.github.lcnicolau.cs50.todolist.config.validation.Password;
 import jakarta.persistence.*;
@@ -24,10 +24,10 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Planner implements CredentialsContainer {
+public class User implements CredentialsContainer {
 
-    public static final Planner USER = new Planner("User", "user@todolist.com", "$2a$10$ZQmwDHSz06NG64yxpVrUFu7RnYQHTGvKbfjD8UDLJQYFsim/Zm12q", true, "USER");
-    public static final Planner ADMIN = new Planner("Admin", "admin@todolist.com", "$2a$10$LMrCFJFLNC4PjH7.734zy.FOUjGrtXiu4P0nQld1HROf9LGvrPPTa", true, "ADMIN");
+    public static final User BASIC = new User("User", "user@todolist.com", "$2a$10$ZQmwDHSz06NG64yxpVrUFu7RnYQHTGvKbfjD8UDLJQYFsim/Zm12q", true, "USER");
+    public static final User ADMIN = new User("Admin", "admin@todolist.com", "$2a$10$LMrCFJFLNC4PjH7.734zy.FOUjGrtXiu4P0nQld1HROf9LGvrPPTa", true, "ADMIN");
 
     @Id
     @GeneratedValue
@@ -55,15 +55,15 @@ public class Planner implements CredentialsContainer {
     @Column(nullable = false)
     private Instant created;
 
-    Planner(String name, String email, String password) {
+    User(String name, String email, String password) {
         this(name, email, password, true);
     }
 
-    Planner(String name, String email, String password, Boolean enabled) {
+    User(String name, String email, String password, Boolean enabled) {
         this(name, email, password, enabled, "USER");
     }
 
-    Planner(String name, String email, String password, Boolean enabled, String roles) {
+    User(String name, String email, String password, Boolean enabled, String roles) {
         this.name = name;
         this.email = email;
         this.password = password;

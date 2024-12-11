@@ -1,6 +1,6 @@
 package io.github.lcnicolau.cs50.todolist.tasks;
 
-import io.github.lcnicolau.cs50.todolist.planner.Planner;
+import io.github.lcnicolau.cs50.todolist.users.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.domain.Page;
@@ -18,9 +18,9 @@ import static org.springframework.http.HttpStatus.*;
 @RequiredArgsConstructor
 class TaskService {
 
-    private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
-    private final AuditorAware<Planner> auditorAware;
+    private final TaskRepository taskRepository;
+    private final AuditorAware<User> auditorAware;
 
 
     Page<Task> findForCurrentUser(String search, Pageable pageable) {
