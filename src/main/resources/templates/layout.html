@@ -33,6 +33,7 @@
 <body hx-ext="head-support">
 <header>
     <nav x-data="{ tab: window.location.pathname.substring(1) || 'home' }"
+         x-init="$watch('tab', _ => htmxProcessSearch())"
          x-on:tab-change.window="tab = $event.detail.value">
         <div id="nav-home">
             <a hx-get="/home" hx-push-url="true" hx-target="main">Home</a> |
@@ -41,14 +42,15 @@
                 | <a hx-get="/users" hx-push-url="true" hx-target="main">Users</a>
             </th:block>
         </div>
-        <div id="nav-search" sec:authorize="isAuthenticated()">
-            <input x-show="tab === 'tasks'"
+        <div id="nav-search">
+            <input x-cloak
+                   x-show="tab === 'tasks' || tab === 'users'"
                    type="search"
                    name="search"
                    placeholder="begin typing to search..."
-                   hx-get="/tasks"
+                   x-bind:hx-get="'/'+tab"
                    hx-trigger="input changed delay:500ms, search"
-                   hx-target="#tasks">
+                   x-bind:hx-target="'#'+tab">
         </div>
         <div id="nav-user" sec:authorize="isAuthenticated()">
             Hi <span sec:authentication="principal.user.name">User</span> |
@@ -59,6 +61,13 @@
             <a hx-get="/login" hx-push-url="true" hx-target="main">Log in</a>
         </div>
     </nav>
+    <script>
+      function htmxProcessSearch() {
+        const search = htmx.find('input[type=search]');
+        search.value = '';
+        htmx.process(search);
+      }
+    </script>
 </header>
 
 <hr class="body-divider">

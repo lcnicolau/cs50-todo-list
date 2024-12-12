@@ -105,6 +105,10 @@ form button {
     display: inline;
 }
 
+[x-cloak] {
+    display: none !important;
+}
+
 
 #error span {
     white-space: pre-line;
