@@ -9,11 +9,11 @@ import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuc
 
 import java.io.IOException;
 
-public class HxRedirectHeaderLogoutSuccessHandler implements LogoutSuccessHandler {
+public class HxLocationRedirectLogoutSuccessHandler implements LogoutSuccessHandler {
 
     private final LogoutSuccessHandler delegate;
 
-    public HxRedirectHeaderLogoutSuccessHandler(String logoutSuccessUrl) {
+    public HxLocationRedirectLogoutSuccessHandler(String logoutSuccessUrl) {
         var handler = new SimpleUrlLogoutSuccessHandler();
         handler.setDefaultTargetUrl(logoutSuccessUrl);
         handler.setRedirectStrategy(new HxLocationRedirectStrategy());

@@ -11,16 +11,16 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 import java.io.IOException;
 
-public class HxRedirectHeaderAccessDeniedHandler implements AccessDeniedHandler {
+public class HxLocationRedirectAccessDeniedHandler implements AccessDeniedHandler {
 
     private final String redirectUrl;
     private final RedirectStrategy redirectStrategy;
 
-    public HxRedirectHeaderAccessDeniedHandler(String redirectUrl) {
+    public HxLocationRedirectAccessDeniedHandler(String redirectUrl) {
         this(redirectUrl, new HxLocationRedirectStrategy(HttpStatus.FORBIDDEN));
     }
 
-    public HxRedirectHeaderAccessDeniedHandler(String redirectUrl, RedirectStrategy redirectStrategy) {
+    public HxLocationRedirectAccessDeniedHandler(String redirectUrl, RedirectStrategy redirectStrategy) {
         this.redirectUrl = redirectUrl;
         this.redirectStrategy = redirectStrategy;
     }

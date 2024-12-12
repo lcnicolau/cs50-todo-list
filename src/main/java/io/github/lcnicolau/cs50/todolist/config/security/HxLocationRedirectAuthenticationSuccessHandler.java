@@ -9,15 +9,15 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 
 import java.io.IOException;
 
-public class HxRedirectHeaderAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class HxLocationRedirectAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     private final AuthenticationSuccessHandler delegate;
 
-    public HxRedirectHeaderAuthenticationSuccessHandler(String defaultSuccessUrl) {
+    public HxLocationRedirectAuthenticationSuccessHandler(String defaultSuccessUrl) {
         this(defaultSuccessUrl, false);
     }
 
-    public HxRedirectHeaderAuthenticationSuccessHandler(String defaultSuccessUrl, boolean alwaysUse) {
+    public HxLocationRedirectAuthenticationSuccessHandler(String defaultSuccessUrl, boolean alwaysUse) {
         var handler = new SavedRequestAwareAuthenticationSuccessHandler();
         handler.setDefaultTargetUrl(defaultSuccessUrl);
         handler.setAlwaysUseDefaultTargetUrl(alwaysUse);

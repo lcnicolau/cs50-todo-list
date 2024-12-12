@@ -11,16 +11,16 @@ import org.springframework.security.web.WebAttributes;
 
 import java.io.IOException;
 
-public class HxRedirectHeaderAuthenticationEntryPoint implements AuthenticationEntryPoint {
+public class HxLocationRedirectAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     private final String redirectUrl;
     private final RedirectStrategy redirectStrategy;
 
-    public HxRedirectHeaderAuthenticationEntryPoint(String redirectUrl) {
+    public HxLocationRedirectAuthenticationEntryPoint(String redirectUrl) {
         this(redirectUrl, new HxLocationRedirectStrategy(HttpStatus.UNAUTHORIZED));
     }
 
-    public HxRedirectHeaderAuthenticationEntryPoint(String redirectUrl, RedirectStrategy redirectStrategy) {
+    public HxLocationRedirectAuthenticationEntryPoint(String redirectUrl, RedirectStrategy redirectStrategy) {
         this.redirectUrl = redirectUrl;
         this.redirectStrategy = redirectStrategy;
     }

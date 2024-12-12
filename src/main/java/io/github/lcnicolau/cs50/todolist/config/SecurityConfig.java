@@ -1,9 +1,9 @@
 package io.github.lcnicolau.cs50.todolist.config;
 
-import io.github.lcnicolau.cs50.todolist.config.security.HxRedirectHeaderAccessDeniedHandler;
-import io.github.lcnicolau.cs50.todolist.config.security.HxRedirectHeaderAuthenticationEntryPoint;
-import io.github.lcnicolau.cs50.todolist.config.security.HxRedirectHeaderAuthenticationSuccessHandler;
-import io.github.lcnicolau.cs50.todolist.config.security.HxRedirectHeaderLogoutSuccessHandler;
+import io.github.lcnicolau.cs50.todolist.config.security.HxLocationRedirectAccessDeniedHandler;
+import io.github.lcnicolau.cs50.todolist.config.security.HxLocationRedirectAuthenticationEntryPoint;
+import io.github.lcnicolau.cs50.todolist.config.security.HxLocationRedirectAuthenticationSuccessHandler;
+import io.github.lcnicolau.cs50.todolist.config.security.HxLocationRedirectLogoutSuccessHandler;
 import io.github.lcnicolau.cs50.todolist.users.User;
 import io.github.lcnicolau.cs50.todolist.users.UserDetails;
 import org.springframework.context.annotation.Bean;
@@ -42,15 +42,15 @@ class SecurityConfig {
                         .usernameParameter("email")
                         .loginPage("/login")
                         .failureForwardUrl("/error?login")
-                        .successHandler(new HxRedirectHeaderAuthenticationSuccessHandler("/home?login"))
+                        .successHandler(new HxLocationRedirectAuthenticationSuccessHandler("/home?login"))
                 ).logout(logout -> logout
-                        .logoutSuccessHandler(new HxRedirectHeaderLogoutSuccessHandler("/home?logout"))
+                        .logoutSuccessHandler(new HxLocationRedirectLogoutSuccessHandler("/home?logout"))
                 ).exceptionHandling(handler -> handler
                         .defaultAuthenticationEntryPointFor(
-                                new HxRedirectHeaderAuthenticationEntryPoint("/login?unauthorized"),
+                                new HxLocationRedirectAuthenticationEntryPoint("/login?unauthorized"),
                                 new RequestHeaderRequestMatcher("HX-Request"))
                         .defaultAccessDeniedHandlerFor(
-                                new HxRedirectHeaderAccessDeniedHandler("/error?forbidden"),
+                                new HxLocationRedirectAccessDeniedHandler("/error?forbidden"),
                                 new RequestHeaderRequestMatcher("HX-Request"))
                 ).authorizeHttpRequests(config -> config
                         .requestMatchers(
