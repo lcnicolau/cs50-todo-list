@@ -48,7 +48,9 @@ textarea {
 
 input[type=checkbox],
 input[type=radio] {
-    width: initial;
+    width: 1em;
+    height: 1em;
+    accent-color: orangered;
 }
 
 aside {
