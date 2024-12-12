@@ -1,6 +1,8 @@
 spring:
   application:
     name: cs50-todo-list
+  jpa:
+    open-in-view: false
   datasource:
     url: jdbc:h2:mem:todo-list
 
