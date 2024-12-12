@@ -4,6 +4,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
@@ -14,11 +15,16 @@ public class HxLocationRedirectLogoutSuccessHandler implements LogoutSuccessHand
     private final LogoutSuccessHandler delegate;
 
     public HxLocationRedirectLogoutSuccessHandler(String logoutSuccessUrl) {
+        this(logoutSuccessUrl, new HxLocationRedirectStrategy());
+    }
+
+    public HxLocationRedirectLogoutSuccessHandler(String logoutSuccessUrl, RedirectStrategy redirectStrategy) {
         var handler = new SimpleUrlLogoutSuccessHandler();
         handler.setDefaultTargetUrl(logoutSuccessUrl);
-        handler.setRedirectStrategy(new HxLocationRedirectStrategy());
+        handler.setRedirectStrategy(redirectStrategy);
         this.delegate = handler;
     }
+
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
