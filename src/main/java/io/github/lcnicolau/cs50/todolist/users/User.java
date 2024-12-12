@@ -84,4 +84,10 @@ public class User implements CredentialsContainer {
                 .map(SimpleGrantedAuthority::new).toList();
     }
 
+    public boolean isAdmin() {
+        return Arrays.stream(roles.split(","))
+                .map(String::trim)
+                .anyMatch("ADMIN"::equals);
+    }
+
 }

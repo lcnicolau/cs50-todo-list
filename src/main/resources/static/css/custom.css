@@ -78,9 +78,15 @@ form button {
     flex-grow: 1;
 }
 
+.item .tag {
+    border: 1px solid orangered;
+    border-radius: .5em;
+    padding: 0 .5em;
+    font-size: .75em;
+}
+
 .item .date {
-    font-size: x-small;
-    font-weight: bold;
+    font-size: .75em;
 }
 
 .item.done,

@@ -1,7 +1,9 @@
-<div class="item" th:classappend="${item.enabled ? 'enabled' : 'disabled'}">
+<div class="item" th:classappend="${item.enabled ? 'enabled' : 'disabled'}"
+     th:with="isCurrentUser= ${item.id == #authentication.principal.user.id}">
     <input type="checkbox"
            name="enabled"
            th:checked="${item.enabled}"
+           th:disabled="${isCurrentUser}"
            th:hx-patch="@{/users/{id} (id=${item.id})}"
            hx:vals="${ {enabled: !item.enabled} }"
            hx-target="closest .item"
@@ -15,11 +17,20 @@
           th:text="${item.email}">
     </span>
 
+    <span class="tag"
+          th:if="${isCurrentUser}">You
+    </span>
+
+    <span class="tag"
+          th:if="${item.isAdmin()}">ADMIN
+    </span>
+
     <span class="date"
           th:text="${@viewUtils.getElapsedTimeSince(item.created)}">
     </span>
 
     <button title="Delete"
+            th:disabled="${isCurrentUser}"
             th:hx-delete="@{/users/{id} (id=${item.id})}"
             hx-trigger="click"
             hx-confirm="Are you sure to delete this?"
