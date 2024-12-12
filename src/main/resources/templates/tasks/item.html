@@ -1,4 +1,5 @@
 <div class="item" th:classappend="${item.done ? 'done' : 'todo'}">
+
     <input type="checkbox"
            name="done"
            th:checked="${item.done}"
@@ -27,4 +28,5 @@
             hx-swap="outerHTML swap:1s">
         <i class="fa-regular fa-trash-can"></i>
     </button>
+
 </div>

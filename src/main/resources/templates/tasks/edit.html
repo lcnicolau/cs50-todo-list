@@ -1,4 +1,5 @@
 <div class="item" th:classappend="${item.done ? 'done' : 'todo'}">
+
     <input class="description"
            name="description"
            th:value="${item.description}"
@@ -16,4 +17,5 @@
             hx-swap="outerHTML">
         <i class="fa-solid fa-xmark"></i>
     </button>
+
 </div>

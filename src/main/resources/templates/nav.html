@@ -1,0 +1,41 @@
+<nav xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+     x-data="{ tab: window.location.pathname.substring(1) || 'home' }"
+     x-init="$watch('tab', _ => htmxProcessSearch())"
+     x-on:tab-change.window="tab = $event.detail.value">
+
+    <div id="nav-home">
+        <a hx-get="/home" hx-push-url="true" hx-target="main">Home</a> |
+        <a hx-get="/tasks" hx-push-url="true" hx-target="main">Tasks</a>
+        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+            | <a hx-get="/users" hx-push-url="true" hx-target="main">Users</a>
+        </th:block>
+    </div>
+
+    <div id="nav-search">
+        <input x-cloak
+               x-show="tab === 'tasks' || tab === 'users'"
+               type="search"
+               name="search"
+               placeholder="begin typing to search..."
+               x-bind:hx-get="'/'+tab"
+               hx-trigger="input changed delay:500ms, search"
+               x-bind:hx-target="'#'+tab">
+    </div>
+
+    <div id="nav-user" sec:authorize="isAuthenticated()">
+        Hi <span sec:authentication="principal.user.name">User</span> |
+        <a hx-post="/logout">Log out</a>
+    </div>
+    <div id="nav-login" sec:authorize="isAnonymous()">
+        <a hx-get="/signup" hx-push-url="true" hx-target="main">Sign up</a> |
+        <a hx-get="/login" hx-push-url="true" hx-target="main">Log in</a>
+    </div>
+
+    <script>
+      function htmxProcessSearch() {
+        const search = htmx.find('input[type=search]');
+        search.value = '';
+        htmx.process(search);
+      }
+    </script>
+</nav>

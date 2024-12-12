@@ -1,5 +1,6 @@
 <div class="item" th:classappend="${item.enabled ? 'enabled' : 'disabled'}"
      th:with="isCurrentUser= ${item.id == #authentication.principal.user.id}">
+
     <input type="checkbox"
            name="enabled"
            th:checked="${item.enabled}"
@@ -38,4 +39,5 @@
             hx-swap="outerHTML swap:1s">
         <i class="fa-regular fa-trash-can"></i>
     </button>
+
 </div>
