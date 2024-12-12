@@ -18,7 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.RequestHeaderRequestMatcher;
 
 import java.util.Optional;
 
@@ -46,12 +45,8 @@ class SecurityConfig {
                 ).logout(logout -> logout
                         .logoutSuccessHandler(new HxLocationRedirectLogoutSuccessHandler("/home?logout"))
                 ).exceptionHandling(handler -> handler
-                        .defaultAuthenticationEntryPointFor(
-                                new HxLocationRedirectAuthenticationEntryPoint("/login?unauthorized"),
-                                new RequestHeaderRequestMatcher("HX-Request"))
-                        .defaultAccessDeniedHandlerFor(
-                                new HxLocationRedirectAccessDeniedHandler("/error?forbidden"),
-                                new RequestHeaderRequestMatcher("HX-Request"))
+                        .authenticationEntryPoint(new HxLocationRedirectAuthenticationEntryPoint("/login?unauthorized"))
+                        .accessDeniedHandler(new HxLocationRedirectAccessDeniedHandler("/error?forbidden"))
                 ).authorizeHttpRequests(config -> config
                         .requestMatchers(
                                 toStaticResources().atCommonLocations().excluding(JAVA_SCRIPT)
