@@ -14,21 +14,29 @@ import java.io.IOException;
 public class HxLocationRedirectAccessDeniedHandler implements AccessDeniedHandler {
 
     private final String redirectUrl;
+    private final boolean storeInSession;
     private final RedirectStrategy redirectStrategy;
 
     public HxLocationRedirectAccessDeniedHandler(String redirectUrl) {
-        this(redirectUrl, new HxLocationRedirectStrategy(HttpStatus.FORBIDDEN));
+        this(redirectUrl, true);
     }
 
-    public HxLocationRedirectAccessDeniedHandler(String redirectUrl, RedirectStrategy redirectStrategy) {
+    public HxLocationRedirectAccessDeniedHandler(String redirectUrl, boolean storeInSession) {
+        this(redirectUrl, storeInSession, new HxLocationRedirectStrategy(HttpStatus.FORBIDDEN));
+    }
+
+    public HxLocationRedirectAccessDeniedHandler(String redirectUrl, boolean storeInSession, RedirectStrategy redirectStrategy) {
         this.redirectUrl = redirectUrl;
+        this.storeInSession = storeInSession;
         this.redirectStrategy = redirectStrategy;
     }
 
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        request.getSession().setAttribute(WebAttributes.ACCESS_DENIED_403, accessDeniedException);
+        if (storeInSession) {
+            request.getSession().setAttribute(WebAttributes.ACCESS_DENIED_403, accessDeniedException);
+        }
         redirectStrategy.sendRedirect(request, response, redirectUrl);
     }
 
