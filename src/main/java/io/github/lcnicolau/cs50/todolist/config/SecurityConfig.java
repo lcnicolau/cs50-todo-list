@@ -26,13 +26,7 @@ import static org.springframework.boot.autoconfigure.security.servlet.PathReques
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toStaticResources;
 
 @Configuration
-class SecurityConfig {
-
-    @Bean
-    @Profile("dev")
-    WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers(toH2Console()); // TODO: only dev
-    }
+public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -64,6 +58,12 @@ class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(Customizer.withDefaults())
                 .build();
+    }
+
+    @Bean
+    @Profile("dev")
+    WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers(toH2Console());
     }
 
     @Bean

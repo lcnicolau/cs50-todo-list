@@ -23,7 +23,9 @@
     </div>
 
     <div id="nav-user" sec:authorize="isAuthenticated()">
-        Hi <span sec:authentication="principal.user.name">User</span> |
+        Hi <span th:text="${#authentication.principal instanceof T(io.github.lcnicolau.cs50.todolist.users.UserDetails)
+                            ? #authentication.principal.user.name
+                            : #authentication.name}">User</span> |
         <a hx-post="/logout">Log out</a>
     </div>
     <div id="nav-login" sec:authorize="isAnonymous()">

@@ -14,4 +14,11 @@ class HtmxUtils {
         };
     }
 
+    static RequestPostProcessor boosted() {
+        return request -> {
+            request.addHeader("HX-Boosted", "true");
+            return request;
+        };
+    }
+
 }
