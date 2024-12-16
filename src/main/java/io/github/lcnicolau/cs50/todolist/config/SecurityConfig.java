@@ -35,7 +35,7 @@ public class SecurityConfig {
                         .usernameParameter("email")
                         .loginPage("/login")
                         .failureForwardUrl("/error?login")
-                        .successHandler(new HxLocationRedirectAuthenticationSuccessHandler("/home?login"))
+                        .successHandler(new HxLocationRedirectAuthenticationSuccessHandler("/tasks?login", true))
                 ).logout(logout -> logout
                         .logoutSuccessHandler(new HxLocationRedirectLogoutSuccessHandler("/home?logout"))
                 ).exceptionHandling(handler -> handler
