@@ -118,6 +118,10 @@ form button {
 }
 
 
+.info {
+    font-size: 1.5em
+}
+
 #error span {
     white-space: pre-line;
 }
