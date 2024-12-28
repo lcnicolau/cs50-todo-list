@@ -1,0 +1,44 @@
+<main xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}"
+      layout:fragment="main">
+
+    <th:block th:fragment="content">
+        <h1>just another to-do list app...</h1>
+        <aside id="error"></aside>
+
+        <aside>but having fun with <a href="https://htmx.org/" target="_blank">htmx</a></aside>
+
+        <p>
+            The main goal is not simply to solve the problem of task management, as there are already excellent
+            applications for that. The idea is to do it in accordance with software development best practices, with the
+            support of modern technologies that provide a smooth user experience, without the need for complex frontend
+            or backend configurations, and that can serve as a reference for other developers who want to integrate such
+            technologies into a more complex project.
+        </p>
+
+        <img src="/images/ddb50.svg" alt="CS50 Duck Debugger" width="64">
+
+        <p>
+            <i class="fa-solid fa-at fa-xl"></i>
+            <span>Leonardo Cabrera Nicolau</span>
+        </p>
+        <p>
+            <i class="fa-brands fa-linkedin fa-xl"></i>
+            <a href="https://linkedin.com/in/lcnicolau">https://linkedin.com/in/lcnicolau</a>
+        </p>
+        <p>
+            <i class="fa-brands fa-github fa-xl"></i>
+            <a href="https://github.com/lcnicolau">https://github.com/lcnicolau</a>
+        </p>
+        <p>
+            <i class="fa-solid fa-location-dot fa-xl"></i>
+            Santiago, Chile
+        </p>
+        <p>
+            <i class="fa-solid fa-calendar-days fa-lg"></i>
+            December 28, 2024
+        </p>
+    </th:block>
+
+</main>

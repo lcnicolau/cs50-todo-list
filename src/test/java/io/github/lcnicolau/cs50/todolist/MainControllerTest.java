@@ -106,6 +106,7 @@ class MainControllerTest {
         return of(
                 arguments("/", anonymous()),
                 arguments("/home", anonymous()),
+                arguments("/about", anonymous()),
                 arguments("/signup", anonymous()),
                 arguments("/login", anonymous()),
                 arguments("/tasks", user("user").roles("USER")),
