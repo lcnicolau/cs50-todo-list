@@ -1,6 +1,6 @@
 # This is [CS50] Final Project
 
-> Just another to-do list app... but having fun with [htmx]
+> Just another to-do list app... but having fun with [htmx].
 
 
 ## Description
@@ -108,7 +108,7 @@ Represents the application entry point, contains the `main` method of `java` res
 
 #### `src/main/java/io/github/lcnicolau/cs50/todolist/ErrorController.java`
 
-[Spring][spring-boot] `@Controller` that handles error rendering in the view, inherits from the `BasicErrorController` class and customizes errors associated with specific [htmx] requests. In addition, it is annotated as `@ControllerAdvice`, which allows it to properly map certain exceptions that occur in the application to be displayed to the user.
+[Spring][spring-boot] `@Controller` that handles error rendering in the view, extends the `BasicErrorController` class and customizes errors associated with specific [htmx] requests. In addition, it is annotated as `@ControllerAdvice`, which allows it to properly map certain exceptions that occur in the application to be displayed to the user.
 
 #### `src/main/java/io/github/lcnicolau/cs50/todolist/MainController.java`
 
@@ -120,7 +120,7 @@ This package contains several `@Component` and `@Configuration` classes that pro
 
 For example, the `DataConfig.java` class, annotated as `@EnableJpaAuditing`, defines an `AuditorAware` bean based on the authenticated user. This minimal configuration enables the use of `@CreatedDate` and `@CreatedBy` in `@Entity` classes to automatically set the date and author of each task.
 
-The `@Password` annotation uses a regular expression to validate the strength of passwords, and it is available for use on the `@Entity User`, like the `@Email` annotation provided by Spring Validation.
+The `@Password` annotation uses a regular expression to validate the strength of passwords, and it is available for use on the `@Entity User`, like the `@Email` annotation provided by [Spring Validation][spring-boot-starter-validation].
 
 In addition, the `SecurityAwareErrorAttributes` class extends the functionality of `DefaultErrorAttributes` to check for common security errors associated with the current request or stored in session, useful for example, after a redirect to the `/login` page.
 
@@ -183,12 +183,12 @@ Although not exhaustive, the project has a set of automated unit tests for the m
 There are also security tests for both protected and restricted resources; and in the case of [htmx] requests, it is verified that the response contains the _Redirection Pattern_ explained in the previous section. These tests are located in the `src/test/java/io/github/lcnicolau/cs50/todolist/MainControllerTestjava` class.
 
 
-## Next steps
+## Next Steps
 
 ### Improvements
 
 - Remove the `Task -> User` dependency and limit the `User` class visibility.
-- Create service interfaces, expose [DTO]s and make the implementation private.
+- Create service interfaces, expose [DTO] and make the implementation private.
 - Show _loading_ indicator on `tasks` and `users` first load (`hx-trigger="load"`).
 - Redirect to the requested page after login (`successHandler`).
 - Show detailed errors only on the `dev` profile (`include-message`).
