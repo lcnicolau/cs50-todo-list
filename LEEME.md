@@ -18,9 +18,9 @@ El objetivo principal no es simplemente resolver el problema de la gestión de t
 
 ### Interfaz de Usuario
 
-La elección de tecnologías para la interfaz de usuario se basó principalmente en el deseo de construir una aplicación simple, pero moderna y atractiva; evitando escribir todo el código [JavaScript] desde cero, o el uso de frameworks más complejos para mantener el _estado global_ de la aplicación.
+La elección de tecnologías para la interfaz de usuario se basó principalmente en el deseo de construir una aplicación simple, pero moderna y atractiva; evitando tener que escribir todo el código [JavaScript] desde cero o recurrir a frameworks más complejos para mantener el _estado global_ de la aplicación.
 
-[htmx] permite agregar interactividad dinámica a una página web utilizando un estilo declarativo con [HTML] estándar y peticiones [AJAX]. Esto reduce la complejidad del proyecto y permite mantener un enfoque más limpio y accesible. Cada tarea puede ser creada, editada, completada o eliminada sin necesidad de recargar la página; brindando una experiencia similar a una aplicación [SPA].
+[HTMX] permite agregar interactividad dinámica a una página web utilizando un estilo declarativo con [HTML] estándar y peticiones [AJAX]. Esto reduce la complejidad del proyecto y permite mantener un enfoque más limpio y accesible. Cada tarea puede ser creada, editada, completada o eliminada sin necesidad de recargar la página; brindando una experiencia similar a una aplicación [SPA].
 
 [Alpine.js], por su parte, permite agregar reactividad a la interfaz en un formato minimalista y con una sintaxis similar a la de [HTML], ideal para tareas como ocultar/mostrar elementos, manejar formularios o interacciones básicas, sin sobrecargar el proyecto con una arquitectura pesada y contribuyendo a una experiencia de usuario ligera y fluida.
 
@@ -40,7 +40,7 @@ Se eligió [Spring Boot][spring-boot] debido a su simplicidad y robustez, y espe
 
 Para el desarrollo se utilizaron los siguientes starters:
 
-- [spring-boot-starter-web]: Provee de un servidor web embebido y facilita la creación de servicios web con poco esfuerzo de configuración, tanto RESTful como (en este proyecto) [MVC].
+- [spring-boot-starter-web]: Provee de un servidor web embebido y facilita la creación de servicios web con poco esfuerzo de configuración, tanto [RESTful] como (en este proyecto) [MVC].
 
 - [spring-boot-starter-security]: Proporciona una configuración de seguridad sencilla pero robusta, incluyendo autenticación, autorización y protección contra los ataques más comunes.
 
@@ -114,17 +114,17 @@ Representa el punto de entrada de la aplicación, contiene el método `main` de 
 
 #### `src/main/java/io/github/lcnicolau/cs50/todolist/MainController.java`
 
-[Spring][spring-boot] `@Controller` que maneja el renderizado de las diferentes páginas de la aplicación. El proyecto consta de 5 pagínas principales (`/home`, `/tasks`, `/users`, `/signup`, `/login`) a las que se puede acceder directamente escribiendo su URL en el navegador, o a través del menú de navegación provisto. Este controlador comprueba si se trata de una solicitud [htmx] ([AJAX]) o no, para devolver solo un fragmento con el contenido relevante de la página, o la página completa en caso de que el usuario haya accedido a través de la URL en el navegador.
+[Spring][spring-boot] `@Controller` que maneja el renderizado de las diferentes páginas de la aplicación. El proyecto consta de cinco pagínas principales (`/home`, `/tasks`, `/users`, `/signup`, `/login`) a las que se puede acceder directamente escribiendo su URL en el navegador, o a través del menú de navegación provisto. Este controlador comprueba si se trata de una solicitud [htmx] ([AJAX]) o no, para devolver solo un fragmento con el contenido relevante de la página, o la página completa en caso de que el usuario haya accedido a través de la URL en el navegador.
 
 #### `src/main/java/io/github/lcnicolau/cs50/todolist/config/**`
 
 Este paquete contiene diferentes clases `@Component` y `@Configuration`, las cuales proveen funcionalidades adicionales, o permiten personalizar ciertos aspectos del framework, como la [seguridad][spring-boot-starter-security], [validación][spring-boot-starter-validation], [acceso a datos][spring-boot-starter-data-jpa] o el [renderizado de las vistas][spring-boot-starter-thymeleaf].
 
-Por ejemplo, la clase `DataConfig.java`, anotada como `@EnableJpaAuditing`, define un bean de tipo `AuditorAware` a partir del usuario autenticado. Esta configuración mínima posibilita el uso de `@CreatedDate` y `@CreatedBy` en las clases de tipo `@Entity` para establecer la fecha y el autor de cada tarea de manera automática.
+Por ejemplo, la clase [DataConfig.java], anotada como `@EnableJpaAuditing`, define un bean de tipo `AuditorAware` a partir del usuario autenticado. Esta configuración mínima posibilita el uso de `@CreatedDate` y `@CreatedBy` en las clases de tipo `@Entity` para establecer la fecha y el autor de cada tarea de manera automática.
 
-La anotación `@Password` utiliza una expresión regular para validar la fortaleza de las contraseñas, quedando disponible para su uso en la `@Entity User`, similar a la anotación `@Email` provista por [Spring Validation][spring-boot-starter-validation].
+La anotación [@Password] utiliza una expresión regular para validar la fortaleza de las contraseñas, quedando disponible para su uso en la `@Entity User`, similar a la anotación `@Email` provista por [Spring Validation][spring-boot-starter-validation].
 
-Adicionalmente, la clase `SecurityAwareErrorAttributes` extiende la funcionalidad de `DefaultErrorAttributes` para buscar errores de seguridad comunes asociados al request actual o almacenados en sesión, útil por ejemplo, luego de una redirección a la página de `/login`.
+Adicionalmente, la clase [SecurityAwareErrorAttributes.java] extiende la funcionalidad de `DefaultErrorAttributes` para buscar errores de seguridad comunes asociados al request actual o almacenados en sesión; útil, por ejemplo, luego de una redirección a la página de `/login`.
 
 Las configuraciones de seguridad se discutirán en detalle en la siguiente sección.
 
@@ -155,7 +155,7 @@ Contiene el layout general y cada una de las páginas de la aplicación. Se util
 
 ## Consideraciones de Seguridad
 
-La clase `src/main/java/io/github/lcnicolau/cs50/todolist/config/SecurityConfig.java` define un conjunto de beans que colaboran entre sí para proveer un marco de seguridad a la aplicación, con la ayuda de [Spring Security][spring-boot-starter-security].
+La clase [SecurityConfig.java] define un conjunto de beans que colaboran entre sí para proveer un marco de seguridad a la aplicación, con la ayuda de [Spring Security][spring-boot-starter-security].
 
 El bean `SecurityFilterChain` define las configuraciones más importantes; por ejemplo, qué hacer en caso de un intento de login fallido o satisfactorio, y en caso de logout. Qué hacer si un usuario anónimo intenta acceder a un recurso protegido, o si un usuario autenticado intenta acceder a un recurso restringido.
 
@@ -163,7 +163,7 @@ Además, se define qué recursos estarán disponibles públicamente (por ejemplo
 
 El bean `WebSecurityCustomizer` solo se activa para el perfil de desarrollo `@Profile("dev")` y se encarga de deshabilitar la seguridad para la consola web de [H2], la cual ya dispone de su propia seguridad y solo está disponible en desarrollo.
 
-El bean `PasswordEncoder` define el algoritmo para codificar las contraseñas, y colabora con las implementaciones de `UserDetails` y `UserDetailsService` (disponibles en el paquete `src/main/java/io/github/lcnicolau/cs50/todolist/users/**`) para registrar y autenticar a los usuarios en base de datos.
+El bean `PasswordEncoder` define el algoritmo para codificar las contraseñas, y colabora con las implementaciones de `UserDetails` y `UserDetailsService` (disponibles en el paquete [users]) para registrar y autenticar a los usuarios en base de datos.
 
 Finalmente, [Spring Security][spring-boot-starter-security] nos provee de una protección integrada contra algunos de los ataques más comunes, como [XSS] y [CSRF], y una gestión adecuada de las políticas de [CORS], sin necesidad de hacer absolutamente nada.
 
@@ -171,18 +171,18 @@ Finalmente, [Spring Security][spring-boot-starter-security] nos provee de una pr
 
 El comportamiento por defecto de [Spring Security][spring-boot-starter-security] ante un acceso no autorizado, es enviar un código de redirección [302] al cliente, apuntando a la página de `/login`; o en caso de autenticación satisfactoria, a la página solicitada originalmente.
 
-Aunque este enfoque puede ser el comportamiento deseado en la mayoría de los casos, cuando se usa en conjunto con [htmx] para cargar fragmentos de la página utilizando peticiones [AJAX], puede dejar el sistema en un estado inconsistente y algunas veces hasta gracioso (como una página de login dentro de un botón :upside_down_face:). El problema es que el navegador intercepta la redirección internamente y devuelve las cabeceras y respuesta de la URL redirigida, luego de lo cual [htmx] carga la respuesta justo donde debía ir el fragmento solicitado originalmente.
+Aunque este enfoque puede ser el comportamiento deseado en la mayoría de los casos, cuando se usa en conjunto con [htmx] para cargar fragmentos de la página utilizando peticiones [AJAX], puede dejar el sistema en un estado inconsistente y algunas veces hasta gracioso (como una página de login dentro de un botón :upside_down_face:). El problema es que el navegador intercepta la redirección internamente y devuelve las cabeceras y respuesta de la nueva URL, luego de lo cual [htmx] carga la respuesta justo donde debía ir el fragmento solicitado originalmente.
 
-Para resolver este problema, [htmx] provee de una forma especial de enviar una instrucción de redirección al cliente, manteniendo un código satisfactorio [200] y enviando una cabecera HTTP personalizada ([HX-Location], [HX-Redirect]) desde el servidor, lo cual [htmx] interpreta correctamente y sigue la redirección, reemplazando su contenido en el body de la página.
+En ese sentido, [htmx] provee de una forma especial de enviar una instrucción de redirección al cliente, manteniendo un código satisfactorio [200] y enviando una cabecera HTTP personalizada ([HX-Location], [HX-Redirect]) desde el servidor, lo cual [htmx] interpreta correctamente y sigue la redirección, reemplazando su contenido en el body de la página.
 
-Por esta razón, fue necesario crear implementaciones personalizadas de `AuthenticationFailureHandler`, `AuthenticationSuccessHandler`, `LogoutSuccessHandler`, `AuthenticationEntryPoint` y `AccessDeniedHandler`; las cuales se pueden encontrar en el paquete `src/main/java/io/github/lcnicolau/cs50/todolist/config/security/**` y se activan en el bean `SecurityFilterChain`.
+Por esta razón, fue necesario crear implementaciones personalizadas de `AuthenticationFailureHandler`, `AuthenticationSuccessHandler`, `LogoutSuccessHandler`, `AuthenticationEntryPoint` y `AccessDeniedHandler`; las cuales se pueden encontrar en el paquete [config/security] y se activan en el bean `SecurityFilterChain`.
 
 
 ## Pruebas Unitarias
 
 Aunque no exhaustivo, el proyecto cuenta con un conjunto de pruebas unitarias automatizadas sobre los principales puntos de acceso a la aplicación, comprobando que la respuesta sea consistente tanto si se acceda desde la url almacenada en el navegador o a través de una petición [AJAX] con [htmx].
 
-También existen pruebas de seguridad tanto a recursos protegidos como restringidos; y en el caso de las peticiones [htmx], se verifica que la respuesta contenga el _Patrón de Redirección_ explicado en la sección anterior. Estas pruebas se encuentran en la clase `src/test/java/io/github/lcnicolau/cs50/todolist/MainControllerTestjava`.
+También existen pruebas de seguridad tanto a recursos protegidos como restringidos; y en el caso de las peticiones [htmx], se verifica que la respuesta contenga el _Patrón de Redirección_ explicado en la sección anterior. Estas pruebas se encuentran en la clase [MainControllerTest.java].
 
 
 ## Siguientes Pasos
@@ -212,6 +212,21 @@ También existen pruebas de seguridad tanto a recursos protegidos como restringi
 
 
 [English]: README.md "Leer en Inglés"
+
+[DataConfig.java]: src/main/java/io/github/lcnicolau/cs50/todolist/config/DataConfig.java
+
+[@Password]: src/main/java/io/github/lcnicolau/cs50/todolist/config/validation/Password.java
+
+[SecurityAwareErrorAttributes.java]: src/main/java/io/github/lcnicolau/cs50/todolist/config/error/SecurityAwareErrorAttributes.java
+
+[SecurityConfig.java]: src/main/java/io/github/lcnicolau/cs50/todolist/config/SecurityConfig.java
+
+[config/security]: src/main/java/io/github/lcnicolau/cs50/todolist/config/security
+
+[users]: src/main/java/io/github/lcnicolau/cs50/todolist/users
+
+[MainControllerTest.java]: src/test/java/io/github/lcnicolau/cs50/todolist/MainControllerTest.java
+
 
 [demo]: https://youtu.be/jI2FjRabNhU "Video Demo"
 
@@ -248,6 +263,8 @@ También existen pruebas de seguridad tanto a recursos protegidos como restringi
 [spring-boot]: https://spring.io/projects/spring-boot "Spring makes Java simple, modern, productive, reactive, cloud-ready"
 
 [spring-boot-starter-web]: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web "Starter for building web, including RESTful, applications using Spring MVC. Uses Tomcat as the default embedded container"
+
+[RESTful]: https://developer.mozilla.org/en-US/docs/Glossary/REST "Representational State Transfer"
 
 [mvc]: https://docs.spring.io/spring-framework/reference/web/webmvc.html "Makes it easy to build web applications using the Model-View-Controller (MVC) design pattern"
 

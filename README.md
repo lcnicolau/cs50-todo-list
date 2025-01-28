@@ -20,7 +20,7 @@ The main goal is not simply to solve the problem of task management, as there ar
 
 The choice of technologies for the user interface was mainly based on the desire to create a simple, yet modern and attractive application; avoiding writing all the [JavaScript] code from scratch or using more complex frameworks to maintain the application _global state_.
 
-[htmx] allows you to add dynamic interactivity to a web page using a declarative style with standard [HTML] and [AJAX] requests. This reduces project complexity and allows you to maintain a cleaner, more accessible approach. Each task can be created, edited, completed or deleted without reloading the page, providing an [SPA]-like experience.
+[HTMX] allows you to add dynamic interactivity to a web page using a declarative style with standard [HTML] and [AJAX] requests. This reduces project complexity and allows you to maintain a cleaner, more accessible approach. Each task can be created, edited, completed or deleted without reloading the page, providing an [SPA]-like experience.
 
 [Alpine.js], on the other hand, allows you to add reactivity to the interface in a minimalist format and with a syntax similar to [HTML], ideal for tasks such as hiding/showing elements, handling forms or basic interactions, without overloading the project with a heavy architecture and contributing to a light and fluid user experience.
 
@@ -40,7 +40,7 @@ On the other hand, [WebJars] simplifies the management of frontend dependencies 
 
 The following starters were used for the development:
 
-- [spring-boot-starter-web]: Provides an embedded web server and facilitates the creation of web services with little configuration effort, both RESTful and (in this project) [MVC].
+- [spring-boot-starter-web]: Provides an embedded web server and facilitates the creation of web services with little configuration effort, both [RESTful] and (in this project) [MVC].
 
 - [spring-boot-starter-security]: Provides a simple but robust security configuration, including authentication, authorization, and protection against the most common attacks.
 
@@ -110,21 +110,21 @@ Represents the application entry point, contains the `main` method of `java` res
 
 #### `src/main/java/io/github/lcnicolau/cs50/todolist/ErrorController.java`
 
-[Spring][spring-boot] `@Controller` that handles error rendering in the view, inherits from the `BasicErrorController` class and customizes errors associated with specific [htmx] requests. In addition, it is annotated as `@ControllerAdvice`, which allows it to properly map certain exceptions that occur in the application to be displayed to the user.
+[Spring][spring-boot] `@Controller` that handles error rendering in the view, extends the `BasicErrorController` class and customizes errors associated with specific [htmx] requests. In addition, it is annotated as `@ControllerAdvice`, which allows it to properly map certain exceptions that occur in the application to be displayed to the user.
 
 #### `src/main/java/io/github/lcnicolau/cs50/todolist/MainController.java`
 
-[Spring][spring-boot] `@Controller` that handles the rendering of the application pages. The project consists of 5 main pages (`/home`, `/tasks`, `/users`, `/signup`, `/login`) that can be accessed directly by typing their URL in the browser, or through the provided navigation menu. This controller checks if it is a [htmx] ([AJAX]) request or not, to return only a fragment with the relevant content of the page, or the full page if the user has accessed it through the URL in the browser.
+[Spring][spring-boot] `@Controller` that handles the rendering of the application pages. The project consists of five main pages (`/home`, `/tasks`, `/users`, `/signup`, `/login`) that can be accessed directly by typing their URL in the browser, or through the provided navigation menu. This controller checks if it is a [htmx] ([AJAX]) request or not, to return only a fragment with the relevant content of the page, or the full page if the user has accessed it through the URL in the browser.
 
 #### `src/main/java/io/github/lcnicolau/cs50/todolist/config/**`
 
 This package contains several `@Component` and `@Configuration` classes that provide additional functionality or allow you to customize certain framework aspects, such as [security][spring-boot-starter-security], [validation][spring-boot-starter-validation], [data access][spring-boot-starter-data-jpa], or [view rendering][spring-boot-starter-thymeleaf].
 
-For example, the `DataConfig.java` class, annotated as `@EnableJpaAuditing`, defines an `AuditorAware` bean based on the authenticated user. This minimal configuration enables the use of `@CreatedDate` and `@CreatedBy` in `@Entity` classes to automatically set the date and author of each task.
+For example, the [DataConfig.java] class, annotated as `@EnableJpaAuditing`, defines an `AuditorAware` bean based on the authenticated user. This minimal configuration enables the use of `@CreatedDate` and `@CreatedBy` in `@Entity` classes to automatically set the date and author of each task.
 
-The `@Password` annotation uses a regular expression to validate the strength of passwords, and it is available for use on the `@Entity User`, like the `@Email` annotation provided by Spring Validation.
+The [@Password] annotation uses a regular expression to validate the strength of passwords, and it is available for use on the `@Entity User`, like the `@Email` annotation provided by [Spring Validation][spring-boot-starter-validation].
 
-In addition, the `SecurityAwareErrorAttributes` class extends the functionality of `DefaultErrorAttributes` to check for common security errors associated with the current request or stored in session, useful for example, after a redirect to the `/login` page.
+In addition, the [SecurityAwareErrorAttributes.java] class extends the functionality of `DefaultErrorAttributes` to check for common security errors associated with the current request or stored in session; useful, for example, after a redirect to the `/login` page.
 
 Security configurations are discussed in detail in the next section.
 
@@ -146,7 +146,7 @@ Similar to the previous file, it contains specific settings for the development 
 
 #### `src/main/resources/static/**`
 
-Contains the application's static files: favicon, images and custom styles (there are no JavaScript files).
+Contains the application's static files: favicon, images, and custom styles (there are no JavaScript files).
 
 #### `src/main/resources/templates/**`
 
@@ -155,7 +155,7 @@ Contains the general layout and each application page. [Thymeleaf] is used to dy
 
 ## Security Considerations
 
-The `src/main/java/io/github/lcnicolau/cs50/todolist/config/SecurityConfig.java` class defines a set of beans that work together to provide a security framework for the application, with help of [Spring Security][spring-boot-starter-security].
+The [SecurityConfig.java] class defines a set of beans that work together to provide a security framework for the application, with the help of [Spring Security][spring-boot-starter-security].
 
 The `SecurityFilterChain` bean defines the most important settings; for example, what to do on a failed or successful login attempt, and on logout. What to do when an anonymous user tries to access a protected resource, or when an authenticated user tries to access a restricted resource.
 
@@ -163,7 +163,7 @@ It also defines which resources are public (for example, static resources and th
 
 The `WebSecurityCustomizer` bean is only enabled for the development profile `@Profile("dev")` and is responsible for disabling security for the [H2] web console, which already has its own security and is only available in development.
 
-The `PasswordEncoder` bean defines the algorithm for encoding passwords, and collaborates with the `UserDetails` and `UserDetailsService` implementations (available in the `src/main/java/io/github/lcnicolau/cs50/todolist/users/**` package) to register and authenticate users in the database.
+The `PasswordEncoder` bean defines the algorithm for encoding passwords, and collaborates with the `UserDetails` and `UserDetailsService` implementations (available in the [users] package) to register and authenticate users in the database.
 
 Finally, [Spring Security][spring-boot-starter-security] provides built-in protection against some of the most common attacks, such as [XSS] and [CSRF], and proper management of [CORS] policies, without us having to do absolutely anything.
 
@@ -171,26 +171,26 @@ Finally, [Spring Security][spring-boot-starter-security] provides built-in prote
 
 The default behavior of [Spring Security][spring-boot-starter-security] in the event of unauthorized access is to send a [302] redirect code to the client, pointing to the `/login` page; or in case of successful authentication, to the originally requested page.
 
-While this approach may be the desired behavior in most cases, when used in conjunction with [htmx] to load page fragments using [AJAX] requests, it can leave the system in an inconsistent and sometimes even funny state (such as a login page inside a button :upside_down_face:). The problem is that the browser intercepts the redirection internally and returns the headers and response from the redirected URL, then [htmx] loads the response right where the original requested fragment should go.
+While this approach may be the desired behavior in most cases, when used in conjunction with [htmx] to load page fragments using [AJAX] requests, it can leave the system in an inconsistent and sometimes even funny state (such as a login page inside a button :upside_down_face:). The problem is that the browser intercepts the redirect internally and returns the headers and response from the new URL, then [htmx] loads the response right where the original requested fragment should go.
 
-To solve this problem, [htmx] provides a special way to send a redirect instruction to the client, keeping a [200] success code and sending a custom HTTP header ([HX-Location], [HX-Redirect]) from the server, which [htmx] correctly interprets and follows the redirect, replacing its content in the page body.
+In that sense, [htmx] provides a special way to send a redirect instruction to the client, keeping a [200] success code and sending a custom HTTP header ([HX-Location], [HX-Redirect]) from the server, which [htmx] correctly interprets and follows the redirect, replacing its content in the page body.
 
-For this reason, it was necessary to create custom implementations of `AuthenticationFailureHandler`, `AuthenticationSuccessHandler`, `LogoutSuccessHandler`, `AuthenticationEntryPoint` and `AccessDeniedHandler`; which can be found in the `src/main/java/io/github/lcnicolau/cs50/todolist/config/security/**` package and are enabled in the `SecurityFilterChain` bean.
+For this reason, it was necessary to create custom implementations of `AuthenticationFailureHandler`, `AuthenticationSuccessHandler`, `LogoutSuccessHandler`, `AuthenticationEntryPoint` and `AccessDeniedHandler`; which can be found in the [config/security] package and are enabled in the `SecurityFilterChain` bean.
 
 
 ## Unit Testing
 
 Although not exhaustive, the project has a set of automated unit tests for the main access points of the application, checking the consistency of the response whether accessed via the URL stored in the browser or via an [AJAX] request with [htmx].
 
-There are also security tests for both protected and restricted resources; and in the case of [htmx] requests, it is verified that the response contains the _Redirection Pattern_ explained in the previous section. These tests are located in the `src/test/java/io/github/lcnicolau/cs50/todolist/MainControllerTestjava` class.
+There are also security tests for both protected and restricted resources; and in the case of [htmx] requests, it is verified that the response contains the _Redirection Pattern_ explained in the previous section. These tests are located in the [MainControllerTest.java] class.
 
 
-## Next steps
+## Next Steps
 
 ### Improvements
 
 - Remove the `Task -> User` dependency and limit the `User` class visibility.
-- Create service interfaces, expose [DTO]s and make the implementation private.
+- Create service interfaces, expose [DTO] and make the implementation private.
 - Show _loading_ indicator on `tasks` and `users` first load (`hx-trigger="load"`).
 - Redirect to the requested page after login (`successHandler`).
 - Show detailed errors only on the `dev` profile (`include-message`).
@@ -212,6 +212,21 @@ There are also security tests for both protected and restricted resources; and i
 
 
 [Español]: LEEME.md "Read in Spanish"
+
+[DataConfig.java]: src/main/java/io/github/lcnicolau/cs50/todolist/config/DataConfig.java
+
+[@Password]: src/main/java/io/github/lcnicolau/cs50/todolist/config/validation/Password.java
+
+[SecurityAwareErrorAttributes.java]: src/main/java/io/github/lcnicolau/cs50/todolist/config/error/SecurityAwareErrorAttributes.java
+
+[SecurityConfig.java]: src/main/java/io/github/lcnicolau/cs50/todolist/config/SecurityConfig.java
+
+[config/security]: src/main/java/io/github/lcnicolau/cs50/todolist/config/security
+
+[users]: src/main/java/io/github/lcnicolau/cs50/todolist/users
+
+[MainControllerTest.java]: src/test/java/io/github/lcnicolau/cs50/todolist/MainControllerTest.java
+
 
 [demo]: https://youtu.be/jI2FjRabNhU "Video Demo"
 
@@ -248,6 +263,8 @@ There are also security tests for both protected and restricted resources; and i
 [spring-boot]: https://spring.io/projects/spring-boot "Spring makes Java simple, modern, productive, reactive, cloud-ready"
 
 [spring-boot-starter-web]: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web "Starter for building web, including RESTful, applications using Spring MVC. Uses Tomcat as the default embedded container"
+
+[RESTful]: https://developer.mozilla.org/en-US/docs/Glossary/REST "Representational State Transfer"
 
 [mvc]: https://docs.spring.io/spring-framework/reference/web/webmvc.html "Makes it easy to build web applications using the Model-View-Controller (MVC) design pattern"
 
