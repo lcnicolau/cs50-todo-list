@@ -1,6 +1,10 @@
 # This is [CS50] Final Project
 
-> Just another to-do list app... but having fun with [htmx]
+> Just another **to-do list** app... but having fun with [htmx].
+
+Video Demo: [Watch on YouTube][demo].
+
+Leer en [Español].
 
 
 ## Description
@@ -8,8 +12,6 @@
 This project consists of a simple task management application that allows users to sign up, create, view, edit, mark as completed and delete tasks. In addition, users with an administrator profile can manage other users.
 
 The main goal is not simply to solve the problem of task management, as there are already excellent applications for that. The idea is to do it in accordance with software development best practices, with the support of modern technologies that provide a smooth user experience, without the need for complex frontend or backend configurations, and that can serve as a reference for other developers who want to integrate such technologies into a more complex project.
-
-#### Video Demo: https://youtu.be/jI2FjRabNhU
 
 
 ## Technologies and Design
@@ -208,6 +210,10 @@ There are also security tests for both protected and restricted resources; and i
 
 
 
+
+[Español]: LEEME.md "Read in Spanish"
+
+[demo]: https://youtu.be/jI2FjRabNhU "Video Demo"
 
 [CS50]: https://cs50.harvard.edu/x/ "CS50’s Introduction to Computer Science"
 

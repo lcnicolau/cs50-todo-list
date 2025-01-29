@@ -1,6 +1,10 @@
 # [CS50]: Proyecto Final
 
-> Una aplicación más de lista de tareas... pero divirtiéndome con [htmx].
+> Una aplicación más de **lista de tareas**... pero divirtiéndome con [htmx].
+
+Video Demostrativo: [Ver en YouTube][demo].
+
+Read in [English].
 
 
 ## Descripción
@@ -8,8 +12,6 @@
 Este proyecto consiste en una aplicación de gestión de tareas simple que permite a los usuarios registrarse, crear, visualizar, editar, marcar como completadas y eliminar tareas. Adicionalmente, usuarios con perfil de administrador pueden gestionar otros usuarios.
 
 El objetivo principal no es simplemente resolver el problema de la gestión de tareas, pues ya existen excelentes aplicaciones para eso. La idea es hacerlo utilizando buenas prácticas de desarrollo de software, con el apoyo de tecnologías modernas que permiten una experiencia de usuario fluida, sin la necesidad de complejas configuraciones de frontend o backend, y que pueda servir como referencia para otros desarrolladores que quieran integrar dichas tecnologías en un proyecto más complejo.
-
-#### Video Demo: https://youtu.be/jI2FjRabNhU
 
 
 ## Tecnologías y Diseño
@@ -208,6 +210,10 @@ También existen pruebas de seguridad tanto a recursos protegidos como restringi
 
 
 
+
+[English]: README.md "Leer en Inglés"
+
+[demo]: https://youtu.be/jI2FjRabNhU "Video Demo"
 
 [CS50]: https://cs50.harvard.edu/x/ "CS50’s Introduction to Computer Science"
 
