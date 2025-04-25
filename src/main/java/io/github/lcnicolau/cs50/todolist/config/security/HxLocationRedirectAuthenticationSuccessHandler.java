@@ -10,6 +10,16 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 
 import java.io.IOException;
 
+
+/**
+ * Handles post-authentication navigation by delegating to the {@link SavedRequestAwareAuthenticationSuccessHandler},
+ * using {@link HxLocationRedirectStrategy} to provide an HTMX-friendly redirect mechanism.
+ *
+ * @author LC Nicolau
+ * @see HxLocationRedirectAccessDeniedHandler
+ * @see HxLocationRedirectAuthenticationEntryPoint
+ * @see HxLocationRedirectLogoutSuccessHandler
+ */
 public class HxLocationRedirectAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     private final AuthenticationSuccessHandler delegate;

@@ -11,6 +11,16 @@ import org.springframework.security.web.WebAttributes;
 
 import java.io.IOException;
 
+
+/**
+ * Handles navigation on {@link HttpStatus#UNAUTHORIZED} access by delegating to the {@link HxLocationRedirectStrategy},
+ * providing an HTMX-friendly redirect mechanism.
+ *
+ * @author LC Nicolau
+ * @see HxLocationRedirectAccessDeniedHandler
+ * @see HxLocationRedirectAuthenticationSuccessHandler
+ * @see HxLocationRedirectLogoutSuccessHandler
+ */
 public class HxLocationRedirectAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     private final String redirectUrl;
