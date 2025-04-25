@@ -11,6 +11,12 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 import java.io.IOException;
 
+/**
+ * Handles navigation on {@link HttpStatus#FORBIDDEN} access by delegating to the {@link HxLocationRedirectStrategy},
+ * providing an htmx-friendly redirect mechanism.
+ *
+ * @author LC Nicolau
+ */
 public class HxLocationRedirectAccessDeniedHandler implements AccessDeniedHandler {
 
     private final String redirectUrl;
@@ -30,7 +36,6 @@ public class HxLocationRedirectAccessDeniedHandler implements AccessDeniedHandle
         this.storeInSession = storeInSession;
         this.redirectStrategy = redirectStrategy;
     }
-
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {

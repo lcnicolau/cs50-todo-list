@@ -10,6 +10,12 @@ import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuc
 
 import java.io.IOException;
 
+/**
+ * Handles post-logout navigation by delegating to the {@link SimpleUrlLogoutSuccessHandler}, using
+ * {@link HxLocationRedirectStrategy} to provide an htmx-friendly redirect mechanism.
+ *
+ * @author LC Nicolau
+ */
 public class HxLocationRedirectLogoutSuccessHandler implements LogoutSuccessHandler {
 
     private final LogoutSuccessHandler delegate;
@@ -24,7 +30,6 @@ public class HxLocationRedirectLogoutSuccessHandler implements LogoutSuccessHand
         handler.setRedirectStrategy(redirectStrategy);
         this.delegate = handler;
     }
-
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {

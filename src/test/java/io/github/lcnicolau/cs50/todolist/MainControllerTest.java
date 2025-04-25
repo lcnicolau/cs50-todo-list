@@ -76,7 +76,7 @@ class MainControllerTest {
 
     @ParameterizedTest
     @MethodSource({"unauthorizedRequests", "forbiddenRequests"})
-    void requestsWithoutHtmxRespondWithRedirection(String pathname, RequestPostProcessor security) throws Exception {
+    void requestsWithoutHtmxRespondWithRedirect(String pathname, RequestPostProcessor security) throws Exception {
         mvc.perform(get(pathname).with(security))
                 .andExpect(status().isFound())
                 .andExpect(header().exists("Location"))

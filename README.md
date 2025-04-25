@@ -167,22 +167,24 @@ The `PasswordEncoder` bean defines the algorithm for encoding passwords, and col
 
 Finally, [Spring Security][spring-boot-starter-security] provides built-in protection against some of the most common attacks, such as [XSS] and [CSRF], and proper management of [CORS] policies, without us having to do absolutely anything.
 
-### Redirection Pattern
+### HTMX Redirect Pattern
 
 The default behavior of [Spring Security][spring-boot-starter-security] in the event of unauthorized access is to send a [302] redirect code to the client, pointing to the `/login` page; or in case of successful authentication, to the originally requested page.
 
 While this approach may be the desired behavior in most cases, when used in conjunction with [htmx] to load page fragments using [AJAX] requests, it can leave the system in an inconsistent and sometimes even funny state (such as a login page inside a button :upside_down_face:). The problem is that the browser intercepts the redirect internally and returns the headers and response from the new URL, then [htmx] loads the response right where the original requested fragment should go.
 
+The [htmx-authentication-error-handling] blog post proposes a workaround _"to have htmx force a full page browser refresh in case there is an authentication failure"_. While it works, this solution doesn't cover all scenarios where [Spring Security][spring-boot-starter-security] might trigger a redirect, and it misses a feature of [htmx] specifically designed to solve this problem.
+
 In that sense, [htmx] provides a special way to send a redirect instruction to the client, keeping a [200] success code and sending a custom HTTP header ([HX-Location], [HX-Redirect]) from the server, which [htmx] correctly interprets and follows the redirect, replacing its content in the page body.
 
-For this reason, it was necessary to create custom implementations of `AuthenticationFailureHandler`, `AuthenticationSuccessHandler`, `LogoutSuccessHandler`, `AuthenticationEntryPoint` and `AccessDeniedHandler`; which can be found in the [config/security] package and are enabled in the `SecurityFilterChain` bean.
+As a result, and inspired by the idea behind [htmx-authentication-error-handling], custom implementations of `AuthenticationFailureHandler`, `AuthenticationSuccessHandler`, `LogoutSuccessHandler`, `AuthenticationEntryPoint` and `AccessDeniedHandler` were created. These implementations are located in the [config/security] package and can be seen in action in the `SecurityFilterChain` bean definition, in the [SecurityConfig.java] class.
 
 
 ## Unit Testing
 
 Although not exhaustive, the project has a set of automated unit tests for the main access points of the application, checking the consistency of the response whether accessed via the URL stored in the browser or via an [AJAX] request with [htmx].
 
-There are also security tests for both protected and restricted resources; and in the case of [htmx] requests, it is verified that the response contains the _Redirection Pattern_ explained in the previous section. These tests are located in the [MainControllerTest.java] class.
+There are also security tests for both protected and restricted resources; and in the case of [htmx] requests, it is verified that the response contains the _HTMX Redirect Pattern_ explained in the previous section. These tests are located in the [MainControllerTest.java] class.
 
 
 ## Next Steps
@@ -299,6 +301,8 @@ There are also security tests for both protected and restricted resources; and i
 [CORS]: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS "Cross-Origin Resource Sharing"
 
 [302]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/302 "Found"
+
+[htmx-authentication-error-handling]: https://www.wimdeblauwe.com/blog/2022/10/04/htmx-authentication-error-handling/ "Htmx authentication error handling"
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200 "OK"
 

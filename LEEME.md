@@ -167,22 +167,24 @@ El bean `PasswordEncoder` define el algoritmo para codificar las contraseñas, y
 
 Finalmente, [Spring Security][spring-boot-starter-security] nos provee de una protección integrada contra algunos de los ataques más comunes, como [XSS] y [CSRF], y una gestión adecuada de las políticas de [CORS], sin necesidad de hacer absolutamente nada.
 
-### Patrón de Redirección
+### Patrón de Redirección HTMX
 
 El comportamiento por defecto de [Spring Security][spring-boot-starter-security] ante un acceso no autorizado, es enviar un código de redirección [302] al cliente, apuntando a la página de `/login`; o en caso de autenticación satisfactoria, a la página solicitada originalmente.
 
 Aunque este enfoque puede ser el comportamiento deseado en la mayoría de los casos, cuando se usa en conjunto con [htmx] para cargar fragmentos de la página utilizando peticiones [AJAX], puede dejar el sistema en un estado inconsistente y algunas veces hasta gracioso (como una página de login dentro de un botón :upside_down_face:). El problema es que el navegador intercepta la redirección internamente y devuelve las cabeceras y respuesta de la nueva URL, luego de lo cual [htmx] carga la respuesta justo donde debía ir el fragmento solicitado originalmente.
 
+La publicación [htmx-authentication-error-handling] propone una alternativa _"para que htmx fuerce una actualización completa del navegador en caso de que exista un error de autenticación"_. Aunque funciona, esta solución no cubre todos los escenarios en los que [Spring Security][spring-boot-starter-security] puede generar una redirección, y desaprovecha una funcionalidad de [htmx] diseñada específicamente para resolver este problema.
+
 En ese sentido, [htmx] provee de una forma especial de enviar una instrucción de redirección al cliente, manteniendo un código satisfactorio [200] y enviando una cabecera HTTP personalizada ([HX-Location], [HX-Redirect]) desde el servidor, lo cual [htmx] interpreta correctamente y sigue la redirección, reemplazando su contenido en el body de la página.
 
-Por esta razón, fue necesario crear implementaciones personalizadas de `AuthenticationFailureHandler`, `AuthenticationSuccessHandler`, `LogoutSuccessHandler`, `AuthenticationEntryPoint` y `AccessDeniedHandler`; las cuales se pueden encontrar en el paquete [config/security] y se activan en el bean `SecurityFilterChain`.
+Como resultado, e inspirado por la idea detrás de [htmx-authentication-error-handling], se crearon implementaciones personalizadas de `AuthenticationFailureHandler`, `AuthenticationSuccessHandler`, `LogoutSuccessHandler`, `AuthenticationEntryPoint` y `AccessDeniedHandler`. Estas implementaciones se encuentran en el paquete [config/security] y se pueden ver en acción en la definición del bean `SecurityFilterChain`, en la clase [SecurityConfig.java].
 
 
 ## Pruebas Unitarias
 
 Aunque no exhaustivo, el proyecto cuenta con un conjunto de pruebas unitarias automatizadas sobre los principales puntos de acceso a la aplicación, comprobando que la respuesta sea consistente tanto si se acceda desde la url almacenada en el navegador o a través de una petición [AJAX] con [htmx].
 
-También existen pruebas de seguridad tanto a recursos protegidos como restringidos; y en el caso de las peticiones [htmx], se verifica que la respuesta contenga el _Patrón de Redirección_ explicado en la sección anterior. Estas pruebas se encuentran en la clase [MainControllerTest.java].
+También existen pruebas de seguridad tanto a recursos protegidos como restringidos; y en el caso de las peticiones [htmx], se verifica que la respuesta contenga el _Patrón de Redirección HTMX_ explicado en la sección anterior. Estas pruebas se encuentran en la clase [MainControllerTest.java].
 
 
 ## Siguientes Pasos
@@ -299,6 +301,8 @@ También existen pruebas de seguridad tanto a recursos protegidos como restringi
 [CORS]: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS "Cross-Origin Resource Sharing"
 
 [302]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/302 "Found"
+
+[htmx-authentication-error-handling]: https://www.wimdeblauwe.com/blog/2022/10/04/htmx-authentication-error-handling/ "Htmx authentication error handling"
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200 "OK"
 
