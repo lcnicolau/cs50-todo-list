@@ -120,11 +120,11 @@ Represents the application entry point, contains the `main` method of `java` res
 
 This package contains several `@Component` and `@Configuration` classes that provide additional functionality or allow you to customize certain framework aspects, such as [security][spring-boot-starter-security], [validation][spring-boot-starter-validation], [data access][spring-boot-starter-data-jpa], or [view rendering][spring-boot-starter-thymeleaf].
 
-For example, the `DataConfig.java` class, annotated as `@EnableJpaAuditing`, defines an `AuditorAware` bean based on the authenticated user. This minimal configuration enables the use of `@CreatedDate` and `@CreatedBy` in `@Entity` classes to automatically set the date and author of each task.
+For example, the [DataConfig.java] class, annotated as `@EnableJpaAuditing`, defines an `AuditorAware` bean based on the authenticated user. This minimal configuration enables the use of `@CreatedDate` and `@CreatedBy` in `@Entity` classes to automatically set the date and author of each task.
 
-The `@Password` annotation uses a regular expression to validate the strength of passwords, and it is available for use on the `@Entity User`, like the `@Email` annotation provided by [Spring Validation][spring-boot-starter-validation].
+The [@Password] annotation uses a regular expression to validate the strength of passwords, and it is available for use on the `@Entity User`, like the `@Email` annotation provided by [Spring Validation][spring-boot-starter-validation].
 
-In addition, the `SecurityAwareErrorAttributes` class extends the functionality of `DefaultErrorAttributes` to check for common security errors associated with the current request or stored in session; useful, for example, after a redirect to the `/login` page.
+In addition, the [SecurityAwareErrorAttributes.java] class extends the functionality of `DefaultErrorAttributes` to check for common security errors associated with the current request or stored in session; useful, for example, after a redirect to the `/login` page.
 
 Security configurations are discussed in detail in the next section.
 
@@ -155,7 +155,7 @@ Contains the general layout and each application page. [Thymeleaf] is used to dy
 
 ## Security Considerations
 
-The `src/main/java/io/github/lcnicolau/cs50/todolist/config/SecurityConfig.java` class defines a set of beans that work together to provide a security framework for the application, with help of [Spring Security][spring-boot-starter-security].
+The [SecurityConfig.java] class defines a set of beans that work together to provide a security framework for the application, with the help of [Spring Security][spring-boot-starter-security].
 
 The `SecurityFilterChain` bean defines the most important settings; for example, what to do on a failed or successful login attempt, and on logout. What to do when an anonymous user tries to access a protected resource, or when an authenticated user tries to access a restricted resource.
 
@@ -163,7 +163,7 @@ It also defines which resources are public (for example, static resources and th
 
 The `WebSecurityCustomizer` bean is only enabled for the development profile `@Profile("dev")` and is responsible for disabling security for the [H2] web console, which already has its own security and is only available in development.
 
-The `PasswordEncoder` bean defines the algorithm for encoding passwords, and collaborates with the `UserDetails` and `UserDetailsService` implementations (available in the `src/main/java/io/github/lcnicolau/cs50/todolist/users/**` package) to register and authenticate users in the database.
+The `PasswordEncoder` bean defines the algorithm for encoding passwords, and collaborates with the `UserDetails` and `UserDetailsService` implementations (available in the [users] package) to register and authenticate users in the database.
 
 Finally, [Spring Security][spring-boot-starter-security] provides built-in protection against some of the most common attacks, such as [XSS] and [CSRF], and proper management of [CORS] policies, without us having to do absolutely anything.
 
@@ -177,14 +177,14 @@ The [htmx-authentication-error-handling] blog post proposes a workaround _"to ha
 
 In that sense, [htmx] provides a special way to send a redirect instruction to the client, keeping a [200] success code and sending a custom HTTP header ([HX-Location], [HX-Redirect]) from the server, which [htmx] correctly interprets and follows the redirect, replacing its content in the page body.
 
-As a result, and inspired by the idea behind [htmx-authentication-error-handling], custom implementations of `AuthenticationFailureHandler`, `AuthenticationSuccessHandler`, `LogoutSuccessHandler`, `AuthenticationEntryPoint` and `AccessDeniedHandler` were created. These are located in the `src/main/java/io/github/lcnicolau/cs50/todolist/config/security/**` package and can be seen in action in the `SecurityFilterChain` bean definition, in the `src/main/java/io/github/lcnicolau/cs50/todolist/config/SecurityConfig.java` class.
+As a result, and inspired by the idea behind [htmx-authentication-error-handling], custom implementations of `AuthenticationFailureHandler`, `AuthenticationSuccessHandler`, `LogoutSuccessHandler`, `AuthenticationEntryPoint` and `AccessDeniedHandler` were created. These implementations are located in the [config/security] package and can be seen in action in the `SecurityFilterChain` bean definition, in the [SecurityConfig.java] class.
 
 
 ## Unit Testing
 
 Although not exhaustive, the project has a set of automated unit tests for the main access points of the application, checking the consistency of the response whether accessed via the URL stored in the browser or via an [AJAX] request with [htmx].
 
-There are also security tests for both protected and restricted resources; and in the case of [htmx] requests, it is verified that the response contains the _HTMX Redirect Pattern_ explained in the previous section. These tests are located in the `src/test/java/io/github/lcnicolau/cs50/todolist/MainControllerTestjava` class.
+There are also security tests for both protected and restricted resources; and in the case of [htmx] requests, it is verified that the response contains the _HTMX Redirect Pattern_ explained in the previous section. These tests are located in the [MainControllerTest.java] class.
 
 
 ## Next Steps
@@ -214,6 +214,21 @@ There are also security tests for both protected and restricted resources; and i
 
 
 [Español]: LEEME.md "Read in Spanish"
+
+[DataConfig.java]: src/main/java/io/github/lcnicolau/cs50/todolist/config/DataConfig.java
+
+[@Password]: src/main/java/io/github/lcnicolau/cs50/todolist/config/validation/Password.java
+
+[SecurityAwareErrorAttributes.java]: src/main/java/io/github/lcnicolau/cs50/todolist/config/error/SecurityAwareErrorAttributes.java
+
+[SecurityConfig.java]: src/main/java/io/github/lcnicolau/cs50/todolist/config/SecurityConfig.java
+
+[config/security]: src/main/java/io/github/lcnicolau/cs50/todolist/config/security
+
+[users]: src/main/java/io/github/lcnicolau/cs50/todolist/users
+
+[MainControllerTest.java]: src/test/java/io/github/lcnicolau/cs50/todolist/MainControllerTest.java
+
 
 [demo]: https://youtu.be/jI2FjRabNhU "Video Demo"
 

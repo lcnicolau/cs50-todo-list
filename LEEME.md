@@ -120,11 +120,11 @@ Representa el punto de entrada de la aplicación, contiene el método `main` de 
 
 Este paquete contiene diferentes clases `@Component` y `@Configuration`, las cuales proveen funcionalidades adicionales, o permiten personalizar ciertos aspectos del framework, como la [seguridad][spring-boot-starter-security], [validación][spring-boot-starter-validation], [acceso a datos][spring-boot-starter-data-jpa] o el [renderizado de las vistas][spring-boot-starter-thymeleaf].
 
-Por ejemplo, la clase `DataConfig.java`, anotada como `@EnableJpaAuditing`, define un bean de tipo `AuditorAware` a partir del usuario autenticado. Esta configuración mínima posibilita el uso de `@CreatedDate` y `@CreatedBy` en las clases de tipo `@Entity` para establecer la fecha y el autor de cada tarea de manera automática.
+Por ejemplo, la clase [DataConfig.java], anotada como `@EnableJpaAuditing`, define un bean de tipo `AuditorAware` a partir del usuario autenticado. Esta configuración mínima posibilita el uso de `@CreatedDate` y `@CreatedBy` en las clases de tipo `@Entity` para establecer la fecha y el autor de cada tarea de manera automática.
 
-La anotación `@Password` utiliza una expresión regular para validar la fortaleza de las contraseñas, quedando disponible para su uso en la `@Entity User`, similar a la anotación `@Email` provista por [Spring Validation][spring-boot-starter-validation].
+La anotación [@Password] utiliza una expresión regular para validar la fortaleza de las contraseñas, quedando disponible para su uso en la `@Entity User`, similar a la anotación `@Email` provista por [Spring Validation][spring-boot-starter-validation].
 
-Adicionalmente, la clase `SecurityAwareErrorAttributes` extiende la funcionalidad de `DefaultErrorAttributes` para buscar errores de seguridad comunes asociados al request actual o almacenados en sesión; útil, por ejemplo, luego de una redirección a la página de `/login`.
+Adicionalmente, la clase [SecurityAwareErrorAttributes.java] extiende la funcionalidad de `DefaultErrorAttributes` para buscar errores de seguridad comunes asociados al request actual o almacenados en sesión; útil, por ejemplo, luego de una redirección a la página de `/login`.
 
 Las configuraciones de seguridad se discutirán en detalle en la siguiente sección.
 
@@ -155,7 +155,7 @@ Contiene el layout general y cada una de las páginas de la aplicación. Se util
 
 ## Consideraciones de Seguridad
 
-La clase `src/main/java/io/github/lcnicolau/cs50/todolist/config/SecurityConfig.java` define un conjunto de beans que colaboran entre sí para proveer un marco de seguridad a la aplicación, con la ayuda de [Spring Security][spring-boot-starter-security].
+La clase [SecurityConfig.java] define un conjunto de beans que colaboran entre sí para proveer un marco de seguridad a la aplicación, con la ayuda de [Spring Security][spring-boot-starter-security].
 
 El bean `SecurityFilterChain` define las configuraciones más importantes; por ejemplo, qué hacer en caso de un intento de login fallido o satisfactorio, y en caso de logout. Qué hacer si un usuario anónimo intenta acceder a un recurso protegido, o si un usuario autenticado intenta acceder a un recurso restringido.
 
@@ -163,7 +163,7 @@ Además, se define qué recursos estarán disponibles públicamente (por ejemplo
 
 El bean `WebSecurityCustomizer` solo se activa para el perfil de desarrollo `@Profile("dev")` y se encarga de deshabilitar la seguridad para la consola web de [H2], la cual ya dispone de su propia seguridad y solo está disponible en desarrollo.
 
-El bean `PasswordEncoder` define el algoritmo para codificar las contraseñas, y colabora con las implementaciones de `UserDetails` y `UserDetailsService` (disponibles en el paquete `src/main/java/io/github/lcnicolau/cs50/todolist/users/**`) para registrar y autenticar a los usuarios en base de datos.
+El bean `PasswordEncoder` define el algoritmo para codificar las contraseñas, y colabora con las implementaciones de `UserDetails` y `UserDetailsService` (disponibles en el paquete [users]) para registrar y autenticar a los usuarios en base de datos.
 
 Finalmente, [Spring Security][spring-boot-starter-security] nos provee de una protección integrada contra algunos de los ataques más comunes, como [XSS] y [CSRF], y una gestión adecuada de las políticas de [CORS], sin necesidad de hacer absolutamente nada.
 
@@ -177,14 +177,14 @@ La publicación [htmx-authentication-error-handling] propone una alternativa _"p
 
 En ese sentido, [htmx] provee de una forma especial de enviar una instrucción de redirección al cliente, manteniendo un código satisfactorio [200] y enviando una cabecera HTTP personalizada ([HX-Location], [HX-Redirect]) desde el servidor, lo cual [htmx] interpreta correctamente y sigue la redirección, reemplazando su contenido en el body de la página.
 
-Como resultado, e inspirado por la idea detrás de [htmx-authentication-error-handling], se crearon implementaciones personalizadas de `AuthenticationFailureHandler`, `AuthenticationSuccessHandler`, `LogoutSuccessHandler`, `AuthenticationEntryPoint` y `AccessDeniedHandler`. Estas se encuentran en el paquete `src/main/java/io/github/lcnicolau/cs50/todolist/config/security/**` y se pueden ver en acción en la definición del bean `SecurityFilterChain`, en la clase `src/main/java/io/github/lcnicolau/cs50/todolist/config/SecurityConfig.java`.
+Como resultado, e inspirado por la idea detrás de [htmx-authentication-error-handling], se crearon implementaciones personalizadas de `AuthenticationFailureHandler`, `AuthenticationSuccessHandler`, `LogoutSuccessHandler`, `AuthenticationEntryPoint` y `AccessDeniedHandler`. Estas implementaciones se encuentran en el paquete [config/security] y se pueden ver en acción en la definición del bean `SecurityFilterChain`, en la clase [SecurityConfig.java].
 
 
 ## Pruebas Unitarias
 
 Aunque no exhaustivo, el proyecto cuenta con un conjunto de pruebas unitarias automatizadas sobre los principales puntos de acceso a la aplicación, comprobando que la respuesta sea consistente tanto si se acceda desde la url almacenada en el navegador o a través de una petición [AJAX] con [htmx].
 
-También existen pruebas de seguridad tanto a recursos protegidos como restringidos; y en el caso de las peticiones [htmx], se verifica que la respuesta contenga el _Patrón de Redirección HTMX_ explicado en la sección anterior. Estas pruebas se encuentran en la clase `src/test/java/io/github/lcnicolau/cs50/todolist/MainControllerTestjava`.
+También existen pruebas de seguridad tanto a recursos protegidos como restringidos; y en el caso de las peticiones [htmx], se verifica que la respuesta contenga el _Patrón de Redirección HTMX_ explicado en la sección anterior. Estas pruebas se encuentran en la clase [MainControllerTest.java].
 
 
 ## Siguientes Pasos
@@ -214,6 +214,21 @@ También existen pruebas de seguridad tanto a recursos protegidos como restringi
 
 
 [English]: README.md "Leer en Inglés"
+
+[DataConfig.java]: src/main/java/io/github/lcnicolau/cs50/todolist/config/DataConfig.java
+
+[@Password]: src/main/java/io/github/lcnicolau/cs50/todolist/config/validation/Password.java
+
+[SecurityAwareErrorAttributes.java]: src/main/java/io/github/lcnicolau/cs50/todolist/config/error/SecurityAwareErrorAttributes.java
+
+[SecurityConfig.java]: src/main/java/io/github/lcnicolau/cs50/todolist/config/SecurityConfig.java
+
+[config/security]: src/main/java/io/github/lcnicolau/cs50/todolist/config/security
+
+[users]: src/main/java/io/github/lcnicolau/cs50/todolist/users
+
+[MainControllerTest.java]: src/test/java/io/github/lcnicolau/cs50/todolist/MainControllerTest.java
+
 
 [demo]: https://youtu.be/jI2FjRabNhU "Video Demo"
 
