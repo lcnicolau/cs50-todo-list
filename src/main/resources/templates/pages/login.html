@@ -5,9 +5,7 @@
 
     <th:block th:fragment="content">
         <h1>log in</h1>
-        <aside id="error">
-            <span th:text="${message}"></span>
-        </aside>
+        <aside id="error"></aside>
 
         <form hx-post="/login" hx-on::after-request="resetForm(event)">
             <label>

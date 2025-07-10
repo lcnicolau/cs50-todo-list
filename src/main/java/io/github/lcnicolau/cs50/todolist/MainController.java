@@ -9,23 +9,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.context.request.ServletWebRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-
-import static java.util.Optional.ofNullable;
 
 @Controller
 @RequiredArgsConstructor
 class MainController {
 
     private final UserService userService;
-    private final ErrorAttributes errorAttributes;
 
 
     @GetMapping({"/", "/home"})
@@ -66,11 +60,8 @@ class MainController {
 
     @GetMapping("/login")
     @HxTriggerAfterSettle("{\"tab-change\": \"login\"}")
-    ModelAndView login(HttpServletRequest request) {
-        var htmx = HtmxRequest.fromRequest(request);
-        var view = htmx.isHtmxRequest() && !htmx.isBoosted() ? "pages/login :: content" : "pages/login";
-        var error = ofNullable(errorAttributes.getError(new ServletWebRequest(request)));
-        return new ModelAndView(view, "message", error.map(Throwable::getMessage).orElse(""));
+    String login(HtmxRequest request) {
+        return request.isHtmxRequest() && !request.isBoosted() ? "pages/login :: content" : "pages/login";
     }
 
 }
