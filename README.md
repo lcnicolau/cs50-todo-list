@@ -124,8 +124,6 @@ For example, the [DataConfig.java] class, annotated as `@EnableJpaAuditing`, def
 
 The [@Password] annotation uses a regular expression to validate the strength of passwords, and it is available for use on the `@Entity User`, like the `@Email` annotation provided by [Spring Validation][spring-boot-starter-validation].
 
-In addition, the [SecurityAwareErrorAttributes.java] class extends the functionality of `DefaultErrorAttributes` to check for common security errors associated with the current request or stored in session; useful, for example, after a redirect to the `/login` page.
-
 Security configurations are discussed in detail in the next section.
 
 #### `src/main/java/io/github/lcnicolau/cs50/todolist/tasks/**`
@@ -218,8 +216,6 @@ There are also security tests for both protected and restricted resources; and i
 [DataConfig.java]: src/main/java/io/github/lcnicolau/cs50/todolist/config/DataConfig.java
 
 [@Password]: src/main/java/io/github/lcnicolau/cs50/todolist/config/validation/Password.java
-
-[SecurityAwareErrorAttributes.java]: src/main/java/io/github/lcnicolau/cs50/todolist/config/error/SecurityAwareErrorAttributes.java
 
 [SecurityConfig.java]: src/main/java/io/github/lcnicolau/cs50/todolist/config/SecurityConfig.java
 
