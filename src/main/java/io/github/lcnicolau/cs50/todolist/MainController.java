@@ -4,16 +4,11 @@ import io.github.lcnicolau.cs50.todolist.users.User;
 import io.github.lcnicolau.cs50.todolist.users.UserService;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxRequest;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxTriggerAfterSettle;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
@@ -53,9 +48,9 @@ class MainController {
     }
 
     @PostMapping("/signup")
-    void signup(@Valid User user, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    String signup(@Valid User user) {
         userService.create(user);
-        request.getRequestDispatcher("/login").forward(request, response);
+        return "forward:/login";
     }
 
     @GetMapping("/login")
