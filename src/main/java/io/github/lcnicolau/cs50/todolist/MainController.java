@@ -1,5 +1,6 @@
 package io.github.lcnicolau.cs50.todolist;
 
+import io.github.lcnicolau.cs50.todolist.config.validation.ValidationException;
 import io.github.lcnicolau.cs50.todolist.users.User;
 import io.github.lcnicolau.cs50.todolist.users.UserService;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxRequest;
@@ -7,6 +8,7 @@ import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxTriggerAfterSettle;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -48,7 +50,8 @@ class MainController {
     }
 
     @PostMapping("/signup")
-    String signup(@Valid User user) {
+    String signup(@Valid User user, BindingResult result) {
+        if (result.hasErrors()) throw new ValidationException(result);
         userService.create(user);
         return "forward:/login";
     }

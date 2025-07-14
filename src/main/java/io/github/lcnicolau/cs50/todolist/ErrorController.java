@@ -16,8 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,8 +28,6 @@ import java.util.Map;
 import static io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponseHeader.HX_RESWAP;
 import static io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponseHeader.HX_TRIGGER_AFTER_SETTLE;
 import static jakarta.servlet.RequestDispatcher.*;
-import static java.lang.System.lineSeparator;
-import static java.util.stream.Collectors.joining;
 import static org.springframework.http.HttpStatus.MULTI_STATUS;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 import static org.springframework.http.MediaType.TEXT_HTML;
@@ -82,16 +78,6 @@ class ErrorController extends BasicErrorController {
         return super.getErrorAttributes(request, options);
     }
 
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    void handle(MethodArgumentNotValidException ex, HttpServletResponse response) throws IOException {
-        var message = ex.getAllErrors().stream()
-                .map(error -> (error instanceof FieldError fieldError)
-                        ? fieldError.getField() + " " + error.getDefaultMessage()
-                        : error.getDefaultMessage())
-                .collect(joining(lineSeparator()));
-        response.sendError(UNPROCESSABLE_ENTITY.value(), message);
-    }
 
     @ExceptionHandler(DuplicateKeyException.class)
     void handle(DuplicateKeyException ex, HttpServletResponse response) throws IOException {

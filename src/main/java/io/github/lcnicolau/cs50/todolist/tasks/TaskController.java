@@ -1,10 +1,12 @@
 package io.github.lcnicolau.cs50.todolist.tasks;
 
+import io.github.lcnicolau.cs50.todolist.config.validation.ValidationException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,7 +37,8 @@ class TaskController {
     }
 
     @PostMapping
-    ModelAndView create(@Valid Task task) {
+    ModelAndView create(@Valid Task task, BindingResult result) {
+        if (result.hasErrors()) throw new ValidationException(result);
         var created = taskService.createForCurrentUser(task);
         return new ModelAndView("tasks/item", "item", created);
     }

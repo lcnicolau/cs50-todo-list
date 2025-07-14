@@ -1,10 +1,12 @@
 package io.github.lcnicolau.cs50.todolist.users;
 
+import io.github.lcnicolau.cs50.todolist.config.validation.ValidationException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,7 +30,8 @@ class UserController {
     }
 
     @PostMapping
-    ModelAndView create(@Valid User user) {
+    ModelAndView create(@Valid User user, BindingResult result) {
+        if (result.hasErrors()) throw new ValidationException(result);
         var created = userService.create(user);
         return new ModelAndView("users/item", "item", created);
     }
