@@ -11,31 +11,25 @@ import org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorContro
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorViewResolver;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
 import java.util.Map;
 
 import static io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponseHeader.HX_RESWAP;
 import static io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponseHeader.HX_TRIGGER_AFTER_SETTLE;
 import static jakarta.servlet.RequestDispatcher.*;
 import static org.springframework.http.HttpStatus.MULTI_STATUS;
-import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 import static org.springframework.http.MediaType.TEXT_HTML;
 import static org.springframework.security.web.WebAttributes.ACCESS_DENIED_403;
 import static org.springframework.security.web.WebAttributes.AUTHENTICATION_EXCEPTION;
 
 @Controller
-@ControllerAdvice
 class ErrorController extends BasicErrorController {
 
     ErrorController(ErrorAttributes errorAttributes,
@@ -76,12 +70,6 @@ class ErrorController extends BasicErrorController {
             request.setAttribute(ERROR_MESSAGE, "It looks like you don't have access to this resource");
         }
         return super.getErrorAttributes(request, options);
-    }
-
-
-    @ExceptionHandler(DuplicateKeyException.class)
-    void handle(DuplicateKeyException ex, HttpServletResponse response) throws IOException {
-        response.sendError(UNPROCESSABLE_ENTITY.value(), ex.getMessage());
     }
 
 }

@@ -110,7 +110,7 @@ Representa el punto de entrada de la aplicación, contiene el método `main` de 
 
 #### `src/main/java/io/github/lcnicolau/cs50/todolist/ErrorController.java`
 
-[Spring][spring-boot] `@Controller` que maneja el renderizado de errores en la vista, hereda de la clase `BasicErrorController` y personaliza los errores asociados a peticiones específicas de [htmx]. Además, se encuentra anotado como `@ControllerAdvice` lo cual le permite mapear adecuadamente ciertas excepciones que se produzcan en la aplicación para ser mostrados al usuario.
+[Spring][spring-boot] `@Controller` que maneja el renderizado de errores en la vista, hereda de la clase `BasicErrorController` y personaliza los errores asociados a peticiones específicas de [htmx].
 
 #### `src/main/java/io/github/lcnicolau/cs50/todolist/MainController.java`
 

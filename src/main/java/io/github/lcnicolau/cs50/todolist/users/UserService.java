@@ -1,7 +1,7 @@
 package io.github.lcnicolau.cs50.todolist.users;
 
+import io.github.lcnicolau.cs50.todolist.config.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -48,7 +48,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public User create(User user) {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new DuplicateKeyException("An account already exists for this email address");
+            throw new ValidationException("An account already exists for this email address");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userMapper.eraseCredentials(userRepository.save(user));

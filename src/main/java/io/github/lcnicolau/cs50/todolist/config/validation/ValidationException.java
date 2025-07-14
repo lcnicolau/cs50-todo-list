@@ -15,7 +15,11 @@ import static java.util.stream.Collectors.joining;
 public class ValidationException extends ResponseStatusException {
 
     public ValidationException(BindingResult bindingResult) {
-        super(HttpStatus.UNPROCESSABLE_ENTITY, resume(bindingResult));
+        this(resume(bindingResult));
+    }
+
+    public ValidationException(String reason) {
+        super(HttpStatus.UNPROCESSABLE_ENTITY, reason);
     }
 
     private static String resume(BindingResult bindingResult) {
