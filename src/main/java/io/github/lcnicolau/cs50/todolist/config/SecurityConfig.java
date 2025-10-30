@@ -1,14 +1,12 @@
 package io.github.lcnicolau.cs50.todolist.config;
 
-import io.github.lcnicolau.cs50.todolist.config.security.HxLocationRedirectAccessDeniedHandler;
-import io.github.lcnicolau.cs50.todolist.config.security.HxLocationRedirectAuthenticationEntryPoint;
-import io.github.lcnicolau.cs50.todolist.config.security.HxLocationRedirectAuthenticationSuccessHandler;
-import io.github.lcnicolau.cs50.todolist.config.security.HxLocationRedirectLogoutSuccessHandler;
+import io.github.lcnicolau.cs50.todolist.config.security.*;
 import io.github.lcnicolau.cs50.todolist.users.User;
 import io.github.lcnicolau.cs50.todolist.users.UserDetails;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -35,12 +33,12 @@ public class SecurityConfig {
                         .usernameParameter("email")
                         .loginPage("/login")
                         .failureForwardUrl("/error?login")
-                        .successHandler(new HxLocationRedirectAuthenticationSuccessHandler("/tasks?login", true))
+                        .successHandler(new HxLocationRedirectAuthenticationSuccessHandler("/tasks?login", true, new HxLocationBoostedRedirectStrategy()))
                 ).logout(logout -> logout
-                        .logoutSuccessHandler(new HxLocationRedirectLogoutSuccessHandler("/home?logout"))
+                        .logoutSuccessHandler(new HxLocationRedirectLogoutSuccessHandler("/home?logout", new HxLocationBoostedRedirectStrategy()))
                 ).exceptionHandling(handler -> handler
-                        .authenticationEntryPoint(new HxLocationRedirectAuthenticationEntryPoint("/login?unauthorized"))
-                        .accessDeniedHandler(new HxLocationRedirectAccessDeniedHandler("/error?forbidden"))
+                        .authenticationEntryPoint(new HxLocationRedirectAuthenticationEntryPoint("/login?unauthorized", new HxLocationBoostedRedirectStrategy(HttpStatus.UNAUTHORIZED)))
+                        .accessDeniedHandler(new HxLocationRedirectAccessDeniedHandler("/error?forbidden", new HxLocationBoostedRedirectStrategy(HttpStatus.FORBIDDEN)))
                 ).authorizeHttpRequests(config -> config
                         .requestMatchers(
                                 toStaticResources().atCommonLocations().excluding(JAVA_SCRIPT)
