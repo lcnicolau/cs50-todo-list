@@ -1,8 +1,8 @@
 package io.github.lcnicolau.cs50.todolist.config;
 
-import io.github.lcnicolau.cs50.todolist.config.security.*;
 import io.github.lcnicolau.cs50.todolist.users.User;
 import io.github.lcnicolau.cs50.todolist.users.UserDetails;
+import io.github.wimdeblauwe.htmx.spring.boot.security.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;

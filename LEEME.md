@@ -175,7 +175,9 @@ La publicación [htmx-authentication-error-handling] propone una alternativa _"p
 
 En ese sentido, [htmx] provee de una forma especial de enviar una instrucción de redirección al cliente, manteniendo un código satisfactorio [200] y enviando una cabecera HTTP personalizada ([HX-Location], [HX-Redirect]) desde el servidor, lo cual [htmx] interpreta correctamente y sigue la redirección, reemplazando su contenido en el body de la página.
 
-Como resultado, e inspirado por la idea detrás de [htmx-authentication-error-handling], se crearon implementaciones personalizadas de `AuthenticationFailureHandler`, `AuthenticationSuccessHandler`, `LogoutSuccessHandler`, `AuthenticationEntryPoint` y `AccessDeniedHandler`. Estas implementaciones se encuentran en el paquete [config/security] y se pueden ver en acción en la definición del bean `SecurityFilterChain`, en la clase [SecurityConfig.java].
+~~Como resultado, e inspirado por la idea detrás de [htmx-authentication-error-handling], se crearon implementaciones personalizadas de `AuthenticationFailureHandler`, `AuthenticationSuccessHandler`, `LogoutSuccessHandler`, `AuthenticationEntryPoint` y `AccessDeniedHandler`. Estas implementaciones se encuentran en el paquete [config/security] y se pueden ver en acción en la definición del bean `SecurityFilterChain`, en la clase [SecurityConfig.java].~~
+
+Como resultado, e inspirado por la idea detrás de [htmx-authentication-error-handling], se creó el _pull request_ [#169][pull169] para el proyecto [htmx-spring-boot], añadiendo implementaciones compatibles con [htmx] para los principales _security handlers_ que realizan redirecciones. De esta forma, cualquier desarrollador puede aprovechar estas utilidades, sirviendo este proyecto como un ejemplo práctico: ver la definición del bean `SecurityFilterChain` en la clase [SecurityConfig.java].
 
 
 ## Pruebas Unitarias
@@ -305,6 +307,8 @@ También existen pruebas de seguridad tanto a recursos protegidos como restringi
 [HX-Location]: https://htmx.org/headers/hx-location/ "HX-Location Response Header"
 
 [HX-Redirect]: https://htmx.org/headers/hx-redirect/ "HX-Redirect Response Header"
+
+[pull169]: https://github.com/wimdeblauwe/htmx-spring-boot/pull/169 "Add support for native htmx redirects in Spring Security"
 
 [DTO]: https://stackoverflow.com/questions/1051182/what-is-a-data-transfer-object-dto "Data Transfer Object"
 
