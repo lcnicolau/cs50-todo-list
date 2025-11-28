@@ -1,11 +1,10 @@
 spring:
   application:
     name: cs50-todo-list
+  web:
+    error:
+      include-message: always
   jpa:
     open-in-view: false
   datasource:
     url: jdbc:h2:mem:todo-list
-
-server:
-  error:
-    include-message: always

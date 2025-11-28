@@ -1,13 +1,12 @@
 package io.github.lcnicolau.cs50.todolist.config.security;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxLocation;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponseHeader;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.web.DefaultRedirectStrategy;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.io.IOException;
 import java.util.Map;
@@ -71,7 +70,7 @@ public class HxLocationBoostedRedirectStrategy extends HxLocationRedirectStrateg
         super.sendHxLocationRedirect(request, response, boosted(url));
     }
 
-    protected String boosted(String url) throws JsonProcessingException {
+    protected String boosted(String url) {
         HtmxLocation location = new HtmxLocation(url);
         location.setTarget("body");
         location.setHeaders(Map.of(HX_BOOSTED.getValue(), "true"));

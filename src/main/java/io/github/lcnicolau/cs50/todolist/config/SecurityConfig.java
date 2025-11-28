@@ -19,15 +19,15 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.Optional;
 
-import static org.springframework.boot.autoconfigure.security.StaticResourceLocation.JAVA_SCRIPT;
-import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
-import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toStaticResources;
+import static org.springframework.boot.security.autoconfigure.web.StaticResourceLocation.JAVA_SCRIPT;
+import static org.springframework.boot.security.autoconfigure.web.servlet.PathRequest.toH2Console;
+import static org.springframework.boot.security.autoconfigure.web.servlet.PathRequest.toStaticResources;
 
 @Configuration
 public class SecurityConfig {
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http) {
         return http
                 .formLogin(login -> login
                         .usernameParameter("email")
@@ -72,7 +72,7 @@ public class SecurityConfig {
 
     Optional<User> getCurrentUser() {
         return Optional
-                .ofNullable(SecurityContextHolder.getContext())
+                .of(SecurityContextHolder.getContext())
                 .map(SecurityContext::getAuthentication)
                 .filter(Authentication::isAuthenticated)
                 .map(Authentication::getPrincipal)

@@ -19,7 +19,7 @@ public class ValidationException extends ResponseStatusException {
     }
 
     public ValidationException(String reason) {
-        super(HttpStatus.UNPROCESSABLE_ENTITY, reason);
+        super(HttpStatus.UNPROCESSABLE_CONTENT, reason);
     }
 
     private static String resume(BindingResult bindingResult) {

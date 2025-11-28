@@ -6,11 +6,11 @@ import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController;
-import org.springframework.boot.autoconfigure.web.servlet.error.ErrorViewResolver;
+import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
-import org.springframework.boot.web.servlet.error.ErrorAttributes;
+import org.springframework.boot.webmvc.autoconfigure.error.BasicErrorController;
+import org.springframework.boot.webmvc.autoconfigure.error.ErrorViewResolver;
+import org.springframework.boot.webmvc.error.ErrorAttributes;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
@@ -33,9 +33,9 @@ import static org.springframework.security.web.WebAttributes.AUTHENTICATION_EXCE
 class ErrorController extends BasicErrorController {
 
     ErrorController(ErrorAttributes errorAttributes,
-                    ServerProperties serverProperties,
+                    WebProperties webProperties,
                     ObjectProvider<ErrorViewResolver> errorViewResolvers) {
-        super(errorAttributes, serverProperties.getError(), errorViewResolvers.orderedStream().toList());
+        super(errorAttributes, webProperties.getError(), errorViewResolvers.orderedStream().toList());
     }
 
 
